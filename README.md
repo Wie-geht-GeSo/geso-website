@@ -18,9 +18,9 @@ Your digital, smart guide through the health and social care system in Austria.
 
 ## Run
 
-`docker compose up`: Start directus
-`bun run dev`: Start frontend
-Directus: http://localhost:8055
+`docker compose up`: Start directus  
+`bun run dev`: Start frontend  
+Directus: http://localhost:8055  
 Frontend: http://localhost:5173
 
 ## *Development* Import Directus data
