@@ -18,4 +18,13 @@ Your digital, smart guide through the health and social care system in Austria.
 
 ## Run
 
-`bun run dev` to start the development server and docker compose services
+`docker compose up`: Start directus
+`bun run dev`: Start frontend
+Directus: http://localhost:8055
+Frontend: http://localhost:5173
+
+## *Development* Import Directus data
+Copy data/ to project root folder before starting directus
+
+
+

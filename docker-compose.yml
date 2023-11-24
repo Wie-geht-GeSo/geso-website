@@ -11,23 +11,11 @@ services:
       POSTGRES_PASSWORD: 'directus'
       POSTGRES_DB: 'directus'
 
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: password
-
   cache:
     image: redis:6
-    environment:
-      - CACHE_TTL=1m
 
   directus:
-    image: directus/directus:10.7.2
+    image: directus/directus:10.8.2
     ports:
       - 8055:8055
     volumes:
@@ -48,7 +36,7 @@ services:
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
 
-      CACHE_ENABLED: 'true'
+      CACHE_ENABLED: 'false' # Set to 'true' in production
       CACHE_STORE: 'redis'
       REDIS: 'redis://cache:6379'
 

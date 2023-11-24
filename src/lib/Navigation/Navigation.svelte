@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getDrawerStore } from '@skeletonlabs/skeleton';
-
+	import { page } from '$app/stores';
 	const drawerStore = getDrawerStore();
 
 	function drawerClose(): void {
@@ -10,9 +10,13 @@
 
 <nav class="list-nav p-4">
 	<ul>
-		<li><a href="/" on:click={drawerClose}>Homepage</a></li>
-		<li><a href="/about" on:click={drawerClose}>About</a></li>
-		<li><a href="/blog" on:click={drawerClose}>Blog</a></li>
-		<li><a href="/contact" on:click={drawerClose}>Contact</a></li>
+		{#each $page.data.navigationPages as navPage}
+			<li>
+				<a href={navPage.slug} on:click={drawerClose}>
+					<span class="material-icons pr-2">{navPage.icon}</span>
+					{navPage.title}
+				</a>
+			</li>
+		{/each}
 	</ul>
 </nav>

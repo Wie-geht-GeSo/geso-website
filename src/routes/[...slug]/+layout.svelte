@@ -1,7 +1,8 @@
 <script lang="ts">
-	import '../app.postcss';
+	import '../../app.postcss';
+	import 'material-icons/iconfont/material-icons.css';
+
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
-	import Fa6SolidMagnifyingGlassPlus from '~icons/fa6-solid/magnifying-glass-plus';
 
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -15,7 +16,6 @@
 	function drawerOpen(): void {
 		drawerStore.open({});
 	}
-	import { page } from '$app/stores';
 	// Disable sidebar for specific routes
 	// $: classesSidebar = $page.url.pathname === '/' ? 'w-0' : 'w-0 lg:w-64';
 	$: classesSidebar = 'w-0 lg:w-64';
@@ -49,17 +49,17 @@
 							</svg>
 						</span>
 					</button>
-					<strong class="text-xl">{data.globals.website_name}</strong>
+					<strong class="text-xl">{data.header.websiteName}</strong>
 				</div>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<button class="btn btn-icon variant-filled">LL</button>
 				<button class="btn btn-icon variant-filled">
-					<Fa6SolidMagnifyingGlassPlus />
+					<span class="material-icons">notifications</span>
 				</button>
 
 				<button class="btn btn-icon variant-filled">
-					<Fa6SolidMagnifyingGlassPlus />
+					<span class="material-icons">account_circle</span>
 				</button>
 
 				<LightSwitch />
