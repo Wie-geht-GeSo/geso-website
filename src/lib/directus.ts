@@ -1,19 +1,18 @@
 import type { Header } from '$lib/types/Header';
-import { createDirectus, graphql, readSingleton, rest } from '@directus/sdk';
+import { createDirectus, graphql, rest } from '@directus/sdk';
 import { DIRECTUS_URL } from '$env/static/private';
-import type { Page } from '$lib/types/Page';
-import type { Menu } from '$lib/types/menu/Menu';
 import type { Globals } from '$lib/types/Globals';
 import type { Footer } from '$lib/types/Footer';
-
+import type { NavigationPage } from './types/navigation/NavigationPage';
+import type { Page } from './types/Page';
 
 interface Schema {
     globals: Globals;
-    menu: Menu;
     header: Header;
     footer: Footer;
     pages: Page[];
     page: Page;
+    navigationPages: NavigationPage[];
 }
 
 

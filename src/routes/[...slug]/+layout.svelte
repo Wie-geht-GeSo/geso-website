@@ -1,77 +1,47 @@
 <script lang="ts">
 	import '../../app.postcss';
 	import 'material-icons/iconfont/material-icons.css';
-
-	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
-
-	// Floating UI for Popups
+	import { AppShell, autoModeWatcher, prefersReducedMotionStore } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
-	// Navigation for Sidebar
-	import Navigation from '$lib/Navigation/Navigation.svelte';
-	// Drawer for Sidebar
-	import { initializeStores, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';
+	import { initializeStores, Drawer } from '@skeletonlabs/skeleton';
+	import AppSidebar from '$lib/components/AppSidebar.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import Footer from '$lib/components/Footer.svelte';
+	import { page } from '$app/stores';
+
 	initializeStores();
-	const drawerStore = getDrawerStore();
-	function drawerOpen(): void {
-		drawerStore.open({});
-	}
-	// Disable sidebar for specific routes
-	// $: classesSidebar = $page.url.pathname === '/' ? 'w-0' : 'w-0 lg:w-64';
-	$: classesSidebar = 'w-0 lg:w-64';
-
+	$: allyPageSmoothScroll = !$prefersReducedMotionStore ? 'scroll-smooth' : '';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	function hideSidebarFor(pageUrlPath: string): boolean {
+		if (pageUrlPath === '/home') return true;
+		return false;
+	}
 
 
-	export let data;
+	$: slotSidebarLeft = hideSidebarFor($page.url.pathname) ? 'w-0' : 'bg-surface-50-900-token lg:w-auto';
 
 </script>
+<svelte:head>{@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}</svelte:head>
 
-<Drawer>
-	<h2 class="p-4">Navigation</h2>
-	<hr />
-	<Navigation />
+<Drawer class="lg:hidden">
+	<AppSidebar />
 </Drawer>
 
 <!-- App Shell TODO: Replace hardcoded styling? -->
-<AppShell slotSidebarLeft="bg-surface-500/5 {classesSidebar}">
+<AppShell {slotSidebarLeft} regionPage={allyPageSmoothScroll}>
 	<svelte:fragment slot="header">
-		<!-- App Bar -->
-		<AppBar>
-			<svelte:fragment slot="lead">
-				<div class="flex items-center">
-					<button class="lg:hidden btn btn-sm mr-4" on:click={drawerOpen}>
-						<span>
-							<svg viewBox="0 0 100 80" class="fill-token w-4 h-4">
-								<rect width="100" height="20" />
-								<rect y="30" width="100" height="20" />
-								<rect y="60" width="100" height="20" />
-							</svg>
-						</span>
-					</button>
-					<strong class="text-xl">{data.header.websiteName}</strong>
-				</div>
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<button class="btn btn-icon variant-filled">LL</button>
-				<button class="btn btn-icon variant-filled">
-					<span class="material-icons">notifications</span>
-				</button>
-
-				<button class="btn btn-icon variant-filled">
-					<span class="material-icons">account_circle</span>
-				</button>
-
-				<LightSwitch />
-			</svelte:fragment>
-		</AppBar>
+		<Header />
 	</svelte:fragment>
 
 	<!-- Left Sidebar Slot -->
 	<svelte:fragment slot="sidebarLeft">
-		<Navigation />
+		<AppSidebar class="hidden lg:grid w-[360px] overflow-hidden" />
 	</svelte:fragment>
 
-	<!-- Page Route Content -->
+	<svelte:fragment slot="pageFooter">
+		<Footer />
+	</svelte:fragment>
+
 	<slot />
 </AppShell>

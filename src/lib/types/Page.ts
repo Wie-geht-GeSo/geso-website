@@ -1,10 +1,12 @@
-import type { UUID } from "crypto";
 import type { Block } from "./blocks/Block";
 
 export interface Page {
-    id: UUID;
+    id: number;
 	title: string;
+    navigationTitle: string;
     slug: string;
     blocks: Block[];
     icon: string;
+    childPages?: Page[];
+    parentPage?: Page;
 }

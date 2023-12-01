@@ -13,6 +13,6 @@ export interface CardBlock {
     title: string;
     subTitle: string;
     textContent: string;
-    image: string; // TODO: Determine how to handle images
+    image: string; 
     page: Page;
 }
