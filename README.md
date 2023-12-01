@@ -23,8 +23,8 @@ Your digital, smart guide through the health and social care system in Austria.
 Directus: http://localhost:8055  
 Frontend: http://localhost:5173
 
-## *Development* Import Directus data
-Copy data/ to project root folder before starting directus
+## Backup/Restore Directus
+Run the `directus-data.sh` script and follow instructions
 
 
 
