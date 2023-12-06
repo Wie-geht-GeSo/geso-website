@@ -1,3 +1,5 @@
+import type { TreeViewNode } from "@skeletonlabs/skeleton";
+
 export interface NavigationPage {
     id: number;
     navigationTitle: string;
@@ -5,4 +7,5 @@ export interface NavigationPage {
     icon: string;
     childPages?: NavigationPage[];
     parentPage?: NavigationPage;
+    treeViewNode?: TreeViewNode
 }

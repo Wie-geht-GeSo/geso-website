@@ -1,11 +1,10 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
+	import type { PageData } from './$types';
 
-	export let data: PageData;
-
+	export let data: PageData ;
 </script>
 
-<div class="container flex flex-col items-start p-10 space-y-4">
+<div class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4">
 	<h1 class="h1">{data.page.title}</h1>
 	<hr />
 	{#each data.page.blocks as block}
@@ -20,7 +19,7 @@
 					<!-- TODO: Error handling for missing page -->
 					<a href={card.page.slug} class="card p-4 text-center">
 						<header class="card-header">
-							<span class="material-icons text-6xl">{card.page.icon} </span>
+							<span class="material-symbols-rounded text-6xl">{card.page.icon} </span>
 						</header>
 						<h3>{card.title}</h3>
 					</a>
@@ -31,16 +30,8 @@
 				{#if block.item.title}
 					<h2>{block.item.title}</h2>
 				{/if}
-				<p class="html-content">{@html block.item.content}</p>
+				<p class="dynamic-html">{@html block.item.content}</p>
 			</div>
 		{/if}
 	{/each}
 </div>
-
-<style>
-	/* TODO: Workaround to style links in dynamic @html content */
-	:global(.html-content a) {
-		color: blue; /* TODO: Use theme color */
-		text-decoration: underline;
-	}
-</style>

@@ -21,9 +21,10 @@
 				class="grid grid-cols-1 gap-2 place-content-center place-items-center md:place-items-start"
 			>
 				<Logo />
-				<p class="!text-sm opacity-80">{$page.data.globals.websiteSlogan}</p>
+				<p class="!text-sm text-center md:text-start">{$page.data.globals.websiteSlogan}</p>
+				<p class="!text-sm mt-2 text-center md:text-start dynamic-html">{@html $page.data.footer.content || ""}</p>
 			</div>
-			<div class="grid grid-cols-3 md:gap-8">
+			<div class="grid grid-cols-3 md:gap-8 text-center md:text-start">
 				{#each $page.data.footer.blocks as block (block.id)}
 					{#if block.collection === 'blockLinkGroup'}
 						<div class="space-y-6">

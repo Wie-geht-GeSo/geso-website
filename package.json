@@ -46,6 +46,6 @@
     "@directus/sdk": "^13.0.1",
     "@floating-ui/dom": "1.5.3",
     "dotenv": "^16.3.1",
-    "material-icons": "latest"
+    "material-symbols": "^0.14.1"
   }
 }

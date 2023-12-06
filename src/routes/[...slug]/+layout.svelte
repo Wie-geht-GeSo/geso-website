@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../../app.postcss';
-	import 'material-icons/iconfont/material-icons.css';
+	import '../../app.css';
+	import 'material-symbols';
 	import { AppShell, autoModeWatcher, prefersReducedMotionStore } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
@@ -9,6 +10,8 @@
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { page } from '$app/stores';
+	import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
+
 
 	initializeStores();
 	$: allyPageSmoothScroll = !$prefersReducedMotionStore ? 'scroll-smooth' : '';
@@ -17,7 +20,6 @@
 		if (pageUrlPath === '/home') return true;
 		return false;
 	}
-
 
 	$: slotSidebarLeft = hideSidebarFor($page.url.pathname) ? 'w-0' : 'bg-surface-50-900-token lg:w-auto';
 
@@ -28,7 +30,6 @@
 	<AppSidebar />
 </Drawer>
 
-<!-- App Shell TODO: Replace hardcoded styling? -->
 <AppShell {slotSidebarLeft} regionPage={allyPageSmoothScroll}>
 	<svelte:fragment slot="header">
 		<Header />
@@ -36,12 +37,16 @@
 
 	<!-- Left Sidebar Slot -->
 	<svelte:fragment slot="sidebarLeft">
-		<AppSidebar class="hidden lg:grid w-[360px] overflow-hidden" />
+		<AppSidebar class="hidden lg:grid overflow-hidden" />
 	</svelte:fragment>
 
 	<svelte:fragment slot="pageFooter">
 		<Footer />
 	</svelte:fragment>
+
+	<!-- <svelte:fragment slot="footer">
+		<MobileNavigationTabs class="md:hidden" />
+	</svelte:fragment> -->
 
 	<slot />
 </AppShell>

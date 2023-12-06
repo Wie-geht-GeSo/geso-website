@@ -3,8 +3,8 @@ import { createDirectus, graphql, rest } from '@directus/sdk';
 import { DIRECTUS_URL } from '$env/static/private';
 import type { Globals } from '$lib/types/Globals';
 import type { Footer } from '$lib/types/Footer';
-import type { NavigationPage } from './types/navigation/NavigationPage';
-import type { Page } from './types/Page';
+import type { NavigationPage } from '../types/navigation/NavigationPage';
+import type { Page } from '../types/Page';
 
 interface Schema {
     globals: Globals;
