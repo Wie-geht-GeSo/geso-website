@@ -9,13 +9,13 @@
 	import { browser } from '$app/environment';
 
 	/* Detect mobile */
-	let isMobile = false;
+	let isNarrowScreen = false;
 	// Function to check and update the screen width status
 	function updateScreenWidth() {
 		// Ensure window is defined (i.e., running in the browser)
 		if (browser) {
 			if (typeof window !== 'undefined') {
-				isMobile = window.innerWidth < 768;
+				isNarrowScreen = window.innerWidth < 1280;
 			}
 		}
 	}
@@ -52,8 +52,8 @@
 			children: page.childPages?.map(convertToTreeViewNode)
 		};
 	}
-	// Set treeViewNodes to all nodes on mobile, or all subnodes of the active AppRail menu item on desktop
-	$: treeViewNodes = isMobile
+	// Set treeViewNodes to all nodes on narrow screens, or all subnodes of the active AppRail menu item on desktop
+	$: treeViewNodes = isNarrowScreen
 		? rootMenuItems.map(convertToTreeViewNode)
 		: currentActiveRootMenuItem?.childPages
 		? currentActiveRootMenuItem.childPages.map(convertToTreeViewNode)
@@ -75,7 +75,7 @@
 	class="grid grid-cols-[auto_1fr] h-full bg-surface-50-900-token border-r border-surface-500/30 {$$props.class}"
 >
 	<AppRail
-		class="hidden md:grid"
+		class="hidden xl:grid"
 		width="w-24"
 		background="bg-transparent"
 		border="border-r border-surface-500/30"
@@ -90,7 +90,7 @@
 		{/each}
 	</AppRail>
 
-	<section class="pt-4 pl-2 pb-20 overflow-y-auto min-w-0 lg:w-[400px]">
+	<section class="pt-4 pl-2 pb-20 overflow-y-auto min-w-0 w-[350px] md:w-[300px] xl:w-[400px]">
 		<RecursiveTreeView
 			nodes={treeViewNodes}
 			bind:expandedNodes

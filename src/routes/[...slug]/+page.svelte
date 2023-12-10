@@ -1,37 +1,98 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import {
+		currentPageHasChildren,
+		currentPageHasParent,
+		currentSlug,
+		rootMenuItems
+	} from '$lib/stores/navigationStore';
+	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
+	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
+	import ContentBlock from '$lib/components/blocks/ContentBlock.svelte';
+	import CardGroupBlock from '$lib/components/blocks/CardGroupBlock.svelte';
+	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
 
-	export let data: PageData ;
+	export let data: PageData;
+	function goBack() {
+		history.back();
+	}
+
+	let noBackButtonSlugs = ['home'];
+	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
+	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent;
+
 </script>
 
-<div class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4">
-	<h1 class="h1">{data.page.title}</h1>
-	<hr />
-	{#each data.page.blocks as block}
-		{#if block.collection === 'blockCardGroup'}
-			{#if block.item.title}
-				<h2 class="h2">{block.item.title}</h2>
-			{/if}
-			<div
-				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
-			>
-				{#each block.item.cards as card}
-					<!-- TODO: Error handling for missing page -->
-					<a href={card.page.slug} class="card p-4 text-center">
-						<header class="card-header">
-							<span class="material-symbols-rounded text-6xl">{card.page.icon} </span>
-						</header>
-						<h3>{card.title}</h3>
-					</a>
-				{/each}
-			</div>
-		{:else if block.collection === 'blockContent'}
-			<div class="blockContent">
-				{#if block.item.title}
-					<h2>{block.item.title}</h2>
-				{/if}
-				<p class="dynamic-html">{@html block.item.content}</p>
+<div class="flex items-start space-x-4">
+	<div
+		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
+		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4"
+	>
+		{#if includeBackButton}
+			<div class="flex items-start space-x-4">
+				<button class="btn btn-sm variant-filled-secondary" on:click={goBack}>
+					<span class="material-symbols-outlined">arrow_back</span>
+					<span>Zurück</span>
+				</button>
 			</div>
 		{/if}
-	{/each}
+		<h1 class="h1">{data.page.title}</h1>
+		<hr />
+		{#each data.page.blocks as block}
+			{#if block.collection === 'blockCardGroup'}
+				<CardGroupBlock cardGroupBlock={block.item} />
+			{:else if block.collection === 'blockContent'}
+				<ContentBlock contentBlock={block.item} />
+			{:else if block.collection === 'blockLink'}
+				<LinkBlock linkBlock={block.item} />
+			{:else if block.collection === 'blockAccordion'}
+				<AccordionBlock accordionBlock={block.item} />
+			{/if}
+		{/each}
+
+		{#if isContentPage}
+			<!-- Rating -->
+			<div class="flex flex-col items-start pt-10">
+				<p class="text-lg font-semibold">Haben Sie die passende Information gefunden?</p>
+				<div class="flex items-center space-x-4 mt-2">
+					<button class="btn variant-ringed-success hover:variant-filled-success">
+						<span class="material-symbols-outlined">thumb_up</span>
+						<span>Ja</span>
+					</button>
+					<button class="btn variant-outline-error hover:variant-filled-error">
+						<span class="material-symbols-outlined">thumb_down</span>
+						<span>Nein</span>
+					</button>
+				</div>
+			</div>
+		{/if}
+
+		{#if isContentPage}
+			<div class="flex items-end space-x-4 pt-10">
+				<a href="/home" title="Neu beginnen" class="btn variant-glass-surface">
+					<span class="material-symbols-outlined">restart_alt</span>
+					<span>Von vorne beginnen</span>
+				</a>
+			</div>
+		{/if}
+	</div>
+
+	{#if isContentPage}
+		<TableOfContents class="hidden lg:grid w-1/4 sticky top-20">
+			<h1>Übersicht</h1>
+		</TableOfContents>
+	{/if}
 </div>
+
+<!-- Global styles for @html content -->
+<style>
+	:global(.dynamic-html h2) {
+		@apply h2 py-5;
+	}
+	:global(.dynamic-html h3) {
+		@apply h3 py-5;
+	}
+	:global(.dynamic-html a) {
+		@apply anchor;
+	}
+</style>

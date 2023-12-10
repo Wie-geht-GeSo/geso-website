@@ -10,7 +10,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { page } from '$app/stores';
-	import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
+	// import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
 
 
 	initializeStores();

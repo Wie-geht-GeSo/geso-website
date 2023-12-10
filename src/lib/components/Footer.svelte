@@ -14,7 +14,7 @@
 </script>
 
 <div class="page-footer {cBase}">
-	<div class="w-full max-w-7xl mx-auto p-4 py-16 md:py-24 space-y-10">
+	<div class="w-full max-w-7xl mx-auto p-4 py-10 space-y-10">
 		<!-- Row 1 -->
 		<section class={cRowOne}>
 			<div

@@ -9,6 +9,12 @@ const currentSlug: Readable<string> = derived(page, $page =>
     $page.url.pathname.split('/').pop() || 'home'
 );
 
+const rootMenuItems: Readable<NavigationPage[]> = derived(page, $page => {
+    const rootPage = $page.data.navigationTreeRoot as NavigationPage;
+    console.log('rootPage: ', rootPage.childPages)
+    return rootPage ? rootPage.childPages ?? [] : [];
+});
+
 const currentNavigationPath: Readable<NavigationPath | null> = derived(
     [page, currentSlug],
     ([$page, $currentSlug]) => {
@@ -43,8 +49,32 @@ function traceNavigationPath(rootPage: NavigationPage, targetSlug: string): Navi
     return tracePath(rootPage);
 }
 
+const currentPageHasChildren: Readable<boolean> = derived(
+    currentNavigationPath,
+    $currentNavigationPath => {
+        if ($currentNavigationPath) {
+            return Array.isArray($currentNavigationPath.page?.childPages) && 
+                   $currentNavigationPath.page.childPages.length > 0;
+        }
+        return false;
+    }
+);
+
+const currentPageHasParent: Readable<boolean> = derived(
+    currentNavigationPath,
+    $currentNavigationPath => {
+        if ($currentNavigationPath) {
+            return $currentNavigationPath.parent !== null;
+        }
+        return false;
+    }
+);
+
 export {
     currentSlug,
     currentNavigationPath,
     currentNavigationPathSlugs,
+    rootMenuItems,
+    currentPageHasChildren,
+    currentPageHasParent
 };

@@ -1,3 +1,4 @@
+import type { AccordionBlock } from "./AccordionBlock";
 import type { CardGroupBlock } from "./CardGroupBlock";
 import type { ContentBlock } from "./ContentBlock";
 import type { LinkBlock, LinkGroupBlock } from "./LinkGroupBlock";
@@ -27,7 +28,12 @@ interface BaseLinkBlock extends BaseBlock {
     item: LinkBlock; 
 }
 
+interface BaseAccordionBlock extends BaseBlock {
+    collection: "blockAccordion";
+    item: AccordionBlock; 
+}
+
 // Add more block type interfaces as needed
 
 // Union type for blocks
-export type Block = BaseCardGroupBlock | BaseContentBlock | BaseLinkGroupBlock | BaseLinkBlock   /* | OtherBlockTypes */;
+export type Block = BaseCardGroupBlock | BaseContentBlock | BaseLinkGroupBlock | BaseLinkBlock | BaseAccordionBlock   /* | OtherBlockTypes */;
