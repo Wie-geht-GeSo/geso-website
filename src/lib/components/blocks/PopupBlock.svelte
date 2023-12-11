@@ -12,13 +12,15 @@
     $: console.log(data);
 </script>
 
-<button class="btn variant-filled-secondary self-start" use:popup={popupClick}>
-	{#if data.icon}
-		<span class="material-symbols-outlined">{data.icon}</span>
-	{/if}
-	<span>{data.title}</span>
-</button>
-
-<div class="card variant-glass-primary p-4 overflow-auto break-words break-all whitespace-normal" data-popup="popupClick">
-	{@html data.content}
+<div class="py-5">
+    <button class="btn variant-filled-secondary self-start" use:popup={popupClick}>
+        {#if data.icon}
+            <span class="material-symbols-outlined">{data.icon}</span>
+        {/if}
+        <span>{data.title}</span>
+    </button>
+    
+    <div class="card variant-glass-primary p-4 overflow-auto break-words break-all whitespace-normal" data-popup="popupClick">
+        {@html data.content}
+    </div>
 </div>

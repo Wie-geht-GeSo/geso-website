@@ -35,7 +35,7 @@
 <div class="flex items-start space-x-4">
 	<div
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
-		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4"
+		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4 max-w-5xl"
 	>
 		{#if includeBackButton}
 			<div class="flex items-start space-x-4">
@@ -58,8 +58,8 @@
 
 		{#if isContentPage}
 			<!-- Rating -->
-			<div class="flex flex-col items-start pt-10">
-				<p class="text-lg font-semibold">Haben Sie die passende Information gefunden?</p>
+			<div class="flex flex-col items-center pt-10 text-center">
+				<p class="text-base md:text-lg font-semibold pb-2">Haben Sie die passende Information gefunden?</p>
 				<div class="flex items-center space-x-4 mt-2">
 					<button class="btn variant-ringed-success hover:variant-filled-success">
 						<span class="material-symbols-outlined">thumb_up</span>
@@ -74,7 +74,7 @@
 		{/if}
 
 		{#if isContentPage}
-			<div class="flex items-end space-x-4 pt-10">
+			<div class="flex space-x-4 pt-10 mx-auto">
 				<a href="/home" title="Neu beginnen" class="btn variant-glass-surface">
 					<span class="material-symbols-outlined">restart_alt</span>
 					<span>Von vorne beginnen</span>
@@ -100,5 +100,17 @@
 	}
 	:global(.dynamic-html a) {
 		@apply anchor;
+	}
+
+	:global(.dynamic-html ul) {
+		@apply list-disc ml-8 my-4;
+	}
+
+	:global(.dynamic-html ol) {
+		@apply list-decimal ml-8 my-4;
+	}
+
+	:global(.dynamic-html li) {
+		@apply py-2;
 	}
 </style>
