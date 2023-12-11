@@ -1,7 +1,8 @@
 import type { AccordionBlock } from "./AccordionBlock";
 import type { CardGroupBlock } from "./CardGroupBlock";
 import type { ContentBlock } from "./ContentBlock";
-import type { LinkBlock, LinkGroupBlock } from "./LinkGroupBlock";
+import type { LinkBlock } from "./LinkBlock";
+import type { LinkGroupBlock } from "./LinkGroupBlock";
 
 interface BaseBlock {
     id: number;

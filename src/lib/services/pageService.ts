@@ -2,6 +2,8 @@ import { directusRest } from "$lib/cms/directus";
 import type { Page } from "$lib/types/Page";
 import { readItems } from "@directus/sdk";
 import { error } from "@sveltejs/kit";
+import { injectDataIntoContent } from "directus-extension-flexible-editor/content";
+import { serializers } from "directus-extension-flexible-editor/content";
 
 export async function getPageBySlug(slug: string): Promise<Page> {
     try {
@@ -11,12 +13,19 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                     slug: { _eq: slug },
                 },
                 fields: [
+                    // General
                     '*',
-                    'blocks.*',
-                    'blocks.item.*',
-                    'blocks.item.cards.*',
-                    'blocks.item.cards.page.slug',
-                    'blocks.item.cards.page.icon',
+                    'editorNodes.*',
+                    'editorNodes.item.*',
+                    // LinkBlock
+                    'editorNodes.item.page.slug',
+                    'editorNodes.item.page.icon',
+                    // CardGroupBlock
+                    'editorNodes.item.cards.title',
+                    'editorNodes.item.cards.page.slug',
+                    'editorNodes.item.cards.page.icon',
+                    // AccordionBlock
+                    'editorNodes.item.items.*',
                 ] as any,
                 limit: 1,
             })

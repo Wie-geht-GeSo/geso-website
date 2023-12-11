@@ -2,11 +2,11 @@
     import type { AccordionBlock } from '$lib/types/blocks/AccordionBlock';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
-    export let accordionBlock: AccordionBlock;
+    export let data: AccordionBlock;
 </script>
 
 <Accordion class="card">
-    {#each accordionBlock.items as accordionItemBlock}
+    {#each data.items as accordionItemBlock}
         <AccordionItem>
             <svelte:fragment slot="lead">
                 <span class="material-symbols-outlined">{accordionItemBlock.icon}</span>

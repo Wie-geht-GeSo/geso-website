@@ -4,7 +4,6 @@
 		currentPageHasChildren,
 		currentPageHasParent,
 		currentSlug,
-		rootMenuItems
 	} from '$lib/stores/navigationStore';
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
@@ -13,6 +12,14 @@
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
 
 	export let data: PageData;
+	// TODO: Move somewhere else
+	// key: directus collection name, value: component
+	const components: { [key: string]: any } = {
+		blockLink: LinkBlock,
+		blockAccordion: AccordionBlock,
+		blockCardGroup: CardGroupBlock
+		// Add other block components as needed
+	};
 	function goBack() {
 		history.back();
 	}
@@ -20,7 +27,6 @@
 	let noBackButtonSlugs = ['home'];
 	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent;
-
 </script>
 
 <div class="flex items-start space-x-4">
@@ -38,15 +44,12 @@
 		{/if}
 		<h1 class="h1">{data.page.title}</h1>
 		<hr />
-		{#each data.page.blocks as block}
-			{#if block.collection === 'blockCardGroup'}
-				<CardGroupBlock cardGroupBlock={block.item} />
-			{:else if block.collection === 'blockContent'}
-				<ContentBlock contentBlock={block.item} />
-			{:else if block.collection === 'blockLink'}
-				<LinkBlock linkBlock={block.item} />
-			{:else if block.collection === 'blockAccordion'}
-				<AccordionBlock accordionBlock={block.item} />
+		{#each data.page.transformedContent || [] as section}
+			{#if section.type === 'html'}
+				<div class="dynamic-html">{@html section.data}</div>
+			{:else}
+				<!-- Dynamically render component -->
+				<svelte:component this={components[section.type]} data={section.data} />
 			{/if}
 		{/each}
 
