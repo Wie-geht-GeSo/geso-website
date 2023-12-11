@@ -7,9 +7,10 @@
 	} from '$lib/stores/navigationStore';
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
-	import ContentBlock from '$lib/components/blocks/ContentBlock.svelte';
 	import CardGroupBlock from '$lib/components/blocks/CardGroupBlock.svelte';
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
+	import PopupBlock from '$lib/components/blocks/PopupBlock.svelte';
+	import SmallTextBlock from '$lib/components/blocks/SmallTextBlock.svelte';
 
 	export let data: PageData;
 	// TODO: Move somewhere else
@@ -17,7 +18,9 @@
 	const components: { [key: string]: any } = {
 		blockLink: LinkBlock,
 		blockAccordion: AccordionBlock,
-		blockCardGroup: CardGroupBlock
+		blockCardGroup: CardGroupBlock,
+		blockPopup: PopupBlock,
+		blockSmallText: SmallTextBlock,
 		// Add other block components as needed
 	};
 	function goBack() {

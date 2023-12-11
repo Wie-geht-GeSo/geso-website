@@ -34,6 +34,7 @@ This extension is used to provide an editor that allows to mix and match rich te
 
 #### Steps to add a new block
 1. Follow the steps in the extension readme to add a new block in Directus
+2. Add access rights for the new block in Directus
 2. Add a new type in `src/lib/types/blocks/`
 3. Extend the fields when fetching the directus data in `pageService.ts`
 4. Add a new block component in `src/lib/components/blocks/`
