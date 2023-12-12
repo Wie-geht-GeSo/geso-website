@@ -8,6 +8,7 @@
 		getModalStore
 	} from '@skeletonlabs/skeleton';
 	import Logo from './Logo.svelte';
+	import ZoomButtons from './ZoomButtons.svelte';
 
 	const drawerStore = getDrawerStore();
 	function drawerOpen(): void {
@@ -48,12 +49,9 @@
 				<small class="hidden md:inline-block">Suche</small>
 			</button>
 		</div>
-		<button class="btn btn-icon-sm hidden sm:flex variant-filled">
-			<span class="material-symbols-outlined">add</span>
-		</button>
-		<button class="btn btn-icon-sm hidden sm:flex variant-filled">
-			<span class="material-symbols-outlined">remove</span>
-		</button>
+		
+		<ZoomButtons />
+		
 		{#if $page.data.header.lightSwitch}
 			<LightSwitch />
 		{/if}
