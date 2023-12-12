@@ -1,9 +1,7 @@
-import { directusRest } from "$lib/cms/directus";
+import { directusRest } from "$lib/services/directusService";
 import type { Page } from "$lib/types/Page";
 import { readItem, readItems, updateItem } from "@directus/sdk";
 import { error } from "@sveltejs/kit";
-import { injectDataIntoContent } from "directus-extension-flexible-editor/content";
-import { serializers } from "directus-extension-flexible-editor/content";
 
 export async function getPageBySlug(slug: string): Promise<Page> {
     const pages = await directusRest.request<Page[]>(
@@ -37,6 +35,7 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 }
 
 async function ratePage(pageId: number, action: "like" | "dislike", previouslyOpposite: boolean): Promise<void> {
+    // Get the current likes and dislikes
     const page = await directusRest.request<Page>(
         readItem('pages', pageId, {
             fields: ['likes', 'dislikes'],
@@ -44,6 +43,7 @@ async function ratePage(pageId: number, action: "like" | "dislike", previouslyOp
     );
 
     if (page) {
+        // If the user previously disliked the page and now likes it, or vice versa, we need to also decrement the opposite rating
         const updatedLikes = action === 'like' ? page.likes + 1 : (previouslyOpposite ? page.likes - 1 : page.likes);
         const updatedDislikes = action === 'dislike' ? page.dislikes + 1 : (previouslyOpposite ? page.dislikes - 1 : page.dislikes);
         await directusRest.request(

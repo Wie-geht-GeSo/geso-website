@@ -21,13 +21,10 @@ import Table from '@tiptap/extension-table';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
 import TableRow from '@tiptap/extension-table-row';
+// ...other extension imports as needed
 import History from '@tiptap/extension-history';
 import type { Page } from '$lib/types/Page';
 import { injectDataIntoContent } from 'directus-extension-flexible-editor/content';
-import type LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
-import type { AccordionBlock } from '$lib/types/blocks/AccordionBlock';
-import type { CardGroupBlock } from '$lib/types/blocks/CardGroupBlock';
-// ...other extension imports as needed
 
 interface Section {
     type: string;

@@ -8,7 +8,7 @@
 	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
 
-	/* Detect mobile */
+	/* Detect narrow screen */
 	let isNarrowScreen = false;
 	// Function to check and update the screen width status
 	function updateScreenWidth() {

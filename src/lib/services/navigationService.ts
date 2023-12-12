@@ -1,4 +1,4 @@
-import { directusRest } from '$lib/cms/directus';
+import { directusRest } from '$lib/services/directusService';
 import type { NavigationPage } from '$lib/types/navigation/NavigationPage';
 import { readItems } from '@directus/sdk';
 

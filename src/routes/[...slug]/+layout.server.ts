@@ -1,5 +1,5 @@
 import type { LayoutServerLoad } from './$types';
-import { directusRest } from '$lib/cms/directus';
+import { directusRest } from '$lib/services/directusService';
 import type { Header } from '$lib/types/Header';
 import { readSingleton } from '@directus/sdk';
 import { error } from '@sveltejs/kit';
