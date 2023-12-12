@@ -14,6 +14,7 @@
 
 
 	initializeStores();
+	// Disable smooth scrolling for users who prefer reduced motion
 	$: allyPageSmoothScroll = !$prefersReducedMotionStore ? 'scroll-smooth' : '';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 	function hideSidebarFor(pageUrlPath: string): boolean {
@@ -35,7 +36,6 @@
 		<Header />
 	</svelte:fragment>
 
-	<!-- Left Sidebar Slot -->
 	<svelte:fragment slot="sidebarLeft">
 		<AppSidebar class="hidden lg:grid overflow-hidden" />
 	</svelte:fragment>

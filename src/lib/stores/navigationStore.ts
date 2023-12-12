@@ -11,7 +11,6 @@ const currentSlug: Readable<string> = derived(page, $page =>
 
 const rootMenuItems: Readable<NavigationPage[]> = derived(page, $page => {
     const rootPage = $page.data.navigationTreeRoot as NavigationPage;
-    console.log('rootPage: ', rootPage.childPages)
     return rootPage ? rootPage.childPages ?? [] : [];
 });
 

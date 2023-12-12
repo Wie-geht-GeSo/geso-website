@@ -7,5 +7,7 @@ declare namespace App {
 	// interface PageData {}
 	// interface Error {}
 	// interface Platform {}
+	interface Error {
+	}
 }
 declare const __VERSION__: string

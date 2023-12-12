@@ -3,16 +3,28 @@
 	import {
 		currentPageHasChildren,
 		currentPageHasParent,
-		currentSlug,
-		rootMenuItems
+		currentSlug
 	} from '$lib/stores/navigationStore';
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
-	import ContentBlock from '$lib/components/blocks/ContentBlock.svelte';
 	import CardGroupBlock from '$lib/components/blocks/CardGroupBlock.svelte';
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
+	import PopupBlock from '$lib/components/blocks/PopupBlock.svelte';
+	import SmallTextBlock from '$lib/components/blocks/SmallTextBlock.svelte';
+	import { page } from '$app/stores';
+	import Rating from '$lib/components/Rating.svelte';
 
 	export let data: PageData;
+	// TODO: Move somewhere else
+	// key: directus collection name, value: component
+	const components: { [key: string]: any } = {
+		blockLink: LinkBlock,
+		blockAccordion: AccordionBlock,
+		blockCardGroup: CardGroupBlock,
+		blockPopup: PopupBlock,
+		blockSmallText: SmallTextBlock
+		// Add other block components as needed
+	};
 	function goBack() {
 		history.back();
 	}
@@ -21,12 +33,17 @@
 	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent;
 
+
 </script>
+
+{#if $page.error}
+	<h1>{$page.error.message}</h1>
+{/if}
 
 <div class="flex items-start space-x-4">
 	<div
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
-		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4"
+		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4 max-w-5xl"
 	>
 		{#if includeBackButton}
 			<div class="flex items-start space-x-4">
@@ -38,37 +55,21 @@
 		{/if}
 		<h1 class="h1">{data.page.title}</h1>
 		<hr />
-		{#each data.page.blocks as block}
-			{#if block.collection === 'blockCardGroup'}
-				<CardGroupBlock cardGroupBlock={block.item} />
-			{:else if block.collection === 'blockContent'}
-				<ContentBlock contentBlock={block.item} />
-			{:else if block.collection === 'blockLink'}
-				<LinkBlock linkBlock={block.item} />
-			{:else if block.collection === 'blockAccordion'}
-				<AccordionBlock accordionBlock={block.item} />
+		{#each data.page.transformedContent || [] as section}
+			{#if section.type === 'html'}
+				<div class="dynamic-html">{@html section.data}</div>
+			{:else}
+				<!-- Dynamically render component -->
+				<svelte:component this={components[section.type]} data={section.data} />
 			{/if}
 		{/each}
 
 		{#if isContentPage}
-			<!-- Rating -->
-			<div class="flex flex-col items-start pt-10">
-				<p class="text-lg font-semibold">Haben Sie die passende Information gefunden?</p>
-				<div class="flex items-center space-x-4 mt-2">
-					<button class="btn variant-ringed-success hover:variant-filled-success">
-						<span class="material-symbols-outlined">thumb_up</span>
-						<span>Ja</span>
-					</button>
-					<button class="btn variant-outline-error hover:variant-filled-error">
-						<span class="material-symbols-outlined">thumb_down</span>
-						<span>Nein</span>
-					</button>
-				</div>
-			</div>
+			<Rating page={data.page} />
 		{/if}
 
 		{#if isContentPage}
-			<div class="flex items-end space-x-4 pt-10">
+			<div class="flex space-x-4 pt-10 mx-auto">
 				<a href="/home" title="Neu beginnen" class="btn variant-glass-surface">
 					<span class="material-symbols-outlined">restart_alt</span>
 					<span>Von vorne beginnen</span>
@@ -94,5 +95,17 @@
 	}
 	:global(.dynamic-html a) {
 		@apply anchor;
+	}
+
+	:global(.dynamic-html ul) {
+		@apply list-disc ml-8 my-4;
+	}
+
+	:global(.dynamic-html ol) {
+		@apply list-decimal ml-8 my-4;
+	}
+
+	:global(.dynamic-html li) {
+		@apply py-2;
 	}
 </style>
