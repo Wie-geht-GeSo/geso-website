@@ -18,9 +18,9 @@
 	}
 </script>
 
-<button class="btn btn-icon-sm hidden sm:flex variant-filled" on:click={zoomIn}>
-	<span class="material-symbols-outlined">add</span>
+<button class="btn btn-icon-sm hidden sm:flex variant-filled" on:click={zoomIn} title="Schrift größer" aria-label="Hineinzoomen">
+    <span class="material-symbols-outlined">add</span>
 </button>
-<button class="btn btn-icon-sm hidden sm:flex variant-filled" on:click={zoomOut}>
-	<span class="material-symbols-outlined">remove</span>
+<button class="btn btn-icon-sm hidden sm:flex variant-filled" on:click={zoomOut} title="Schrift kleiner" aria-label="Herauszoomen">
+    <span class="material-symbols-outlined">remove</span>
 </button>
