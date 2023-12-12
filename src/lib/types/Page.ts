@@ -14,4 +14,6 @@ export interface Page {
     editorNodes: any[];   
     childPages?: Page[];
     parentPage?: Page;
+    likes: number;
+    dislikes: number;
 }

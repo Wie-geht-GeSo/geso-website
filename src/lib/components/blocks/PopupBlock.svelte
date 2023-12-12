@@ -9,7 +9,6 @@
 	};
 
 	export let data: PopupBlock;
-    $: console.log(data);
 </script>
 
 <div class="py-5">

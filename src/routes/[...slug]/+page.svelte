@@ -3,7 +3,7 @@
 	import {
 		currentPageHasChildren,
 		currentPageHasParent,
-		currentSlug,
+		currentSlug
 	} from '$lib/stores/navigationStore';
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
@@ -11,6 +11,8 @@
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
 	import PopupBlock from '$lib/components/blocks/PopupBlock.svelte';
 	import SmallTextBlock from '$lib/components/blocks/SmallTextBlock.svelte';
+	import { page } from '$app/stores';
+	import Rating from '$lib/components/Rating.svelte';
 
 	export let data: PageData;
 	// TODO: Move somewhere else
@@ -20,7 +22,7 @@
 		blockAccordion: AccordionBlock,
 		blockCardGroup: CardGroupBlock,
 		blockPopup: PopupBlock,
-		blockSmallText: SmallTextBlock,
+		blockSmallText: SmallTextBlock
 		// Add other block components as needed
 	};
 	function goBack() {
@@ -30,7 +32,13 @@
 	let noBackButtonSlugs = ['home'];
 	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent;
+
+
 </script>
+
+{#if $page.error}
+	<h1>{$page.error.message}</h1>
+{/if}
 
 <div class="flex items-start space-x-4">
 	<div
@@ -57,20 +65,7 @@
 		{/each}
 
 		{#if isContentPage}
-			<!-- Rating -->
-			<div class="flex flex-col items-center pt-10 text-center">
-				<p class="text-base md:text-lg font-semibold pb-2">Haben Sie die passende Information gefunden?</p>
-				<div class="flex items-center space-x-4 mt-2">
-					<button class="btn variant-ringed-success hover:variant-filled-success">
-						<span class="material-symbols-outlined">thumb_up</span>
-						<span>Ja</span>
-					</button>
-					<button class="btn variant-outline-error hover:variant-filled-error">
-						<span class="material-symbols-outlined">thumb_down</span>
-						<span>Nein</span>
-					</button>
-				</div>
-			</div>
+			<Rating page={data.page} />
 		{/if}
 
 		{#if isContentPage}
