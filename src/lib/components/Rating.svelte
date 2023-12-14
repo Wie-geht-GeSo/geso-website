@@ -2,6 +2,8 @@
 	import { enhance } from '$app/forms';
 	import type { Page } from '$lib/types/Page';
 	import { onMount } from 'svelte';
+	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
+	const toastStore = getToastStore();
 
 	export let page: Page;
 
@@ -15,6 +17,10 @@
 		userDisliked = localStorage.getItem(localStorageKeyDislike);
 	});
 
+	const ratingToast: ToastSettings = {
+		message: '👍 Danke für Ihre Rückmeldung!',
+        timeout: 3000
+	};
 	function handleSubmit(choice: 'like' | 'dislike', cancel: () => void) {
 		if (
 			(choice === 'like' && userLiked === 'true') ||
@@ -22,6 +28,7 @@
 		) {
 			cancel();
 		} else {
+			toastStore.trigger(ratingToast);
 			if (choice === 'like') {
 				localStorage.setItem(localStorageKeyLike, 'true');
 				localStorage.removeItem(localStorageKeyDislike);
@@ -50,7 +57,7 @@
 			}}
 		>
 			<input type="hidden" name="pageId" value={page.id} />
-            <input type="hidden" name="previousAction" value={userDisliked ? 'true' : ''} />
+			<input type="hidden" name="previousAction" value={userDisliked ? 'true' : ''} />
 			<button
 				class="btn hover:variant-filled-success {userLiked
 					? 'variant-filled-success'
@@ -68,7 +75,7 @@
 			}}
 		>
 			<input type="hidden" name="pageId" value={page.id} />
-            <input type="hidden" name="previousAction" value={userLiked ? 'true' : ''} />
+			<input type="hidden" name="previousAction" value={userLiked ? 'true' : ''} />
 			<button
 				class="btn hover:variant-filled-error {userDisliked
 					? 'variant-filled-error'
