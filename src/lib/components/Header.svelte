@@ -29,18 +29,18 @@
 <AppBar shadow="shadow-xl">
 	<svelte:fragment slot="lead">
 		<div class="flex items-center">
-			<button class="lg:hidden btn mr-2" on:click={drawerOpen}>
+			<button class="hidden md:block lg:hidden btn mr-2" on:click={drawerOpen}>
 				<span class="material-symbols-outlined"> menu </span>
 			</button>
 			<a href="/home" class="flex items-center">
 				<Logo />
-				<strong class="text-xl hidden md:inline">{$page.data.globals.websiteName}</strong>
+				<strong class="text-xl sm:inline">{$page.data.globals.websiteName}</strong>
 			</a>
 		</div>
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
 		<!-- Search -->
-		<div class="md:inline md:ml-4">
+		<div class="hidden md:inline md:ml-4">
 			<button
 				class="btn space-x-4 variant-soft hover:variant-soft-secondary"
 				on:click={triggerSearch}

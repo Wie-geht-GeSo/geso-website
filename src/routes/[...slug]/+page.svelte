@@ -31,8 +31,7 @@
 
 	let noBackButtonSlugs = ['home'];
 	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
-	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent;
-
+	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent; // TODO: Better way to check if page is content page
 
 </script>
 
@@ -43,7 +42,7 @@
 <div class="flex items-start space-x-4">
 	<div
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
-		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 sm:w-3/4 max-w-5xl"
+		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 {!isContentPage ? 'max-w-7xl' : 'max-w-5xl'}"
 	>
 		{#if includeBackButton}
 			<div class="flex items-start space-x-4">
