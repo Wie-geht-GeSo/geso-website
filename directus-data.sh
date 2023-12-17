@@ -3,7 +3,7 @@
 
 operation="$1"
 backup_name="$2"
-backup_dir="data/"
+backup_dirs="data/ uploads/"
 backup_base_path="backups/directus_backup_"
 
 # Create the backups directory if it doesn't exist
@@ -59,8 +59,8 @@ backup)
     fi
 
     # Create a backup
-    sudo zip -r "$backup_path" "$backup_dir"
-    echo "Backup created for $backup_dir with name $backup_name"
+    sudo zip -r "$backup_path" $backup_dirs
+    echo "Backup created for $backup_dirs with name $backup_name"
     ;;
 
 
