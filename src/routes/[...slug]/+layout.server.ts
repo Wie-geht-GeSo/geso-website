@@ -36,7 +36,7 @@ export const load: LayoutServerLoad = (async () => {
 
     } catch (e) {
         console.error('layout.server.ts: ', e);
-        throw error(500, "Internal Server Error");
+        error(500, "Internal Server Error");
     }
 
 }) satisfies LayoutServerLoad;

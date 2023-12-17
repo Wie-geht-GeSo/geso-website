@@ -49,7 +49,7 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 
         return page;
     } else {
-        throw error(404, { message: 'Page with slug ' + slug + ' not found' });
+        error(404, { message: 'Page with slug ' + slug + ' not found' });
     }
 }
 
@@ -69,7 +69,7 @@ async function ratePage(pageId: number, action: "like" | "dislike", previouslyOp
             updateItem('pages', pageId, { likes: updatedLikes, dislikes: updatedDislikes })
         );
     } else {
-        throw error(404, 'Page with id ' + pageId + ' not found');
+        error(404, 'Page with id ' + pageId + ' not found');
     }
 }
 

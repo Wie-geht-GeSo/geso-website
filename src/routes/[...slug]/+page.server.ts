@@ -5,7 +5,7 @@ import { transformPageContent } from '$lib/services/contentTransformationService
 
 export const load: PageServerLoad = async ({ url }) => {
     if (url.pathname === '/') {
-        throw redirect(301, '/home');
+        redirect(301, '/home');
     }
 
     // TODO: Use store?
