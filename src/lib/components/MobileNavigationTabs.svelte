@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { TabGroup, TabAnchor, Tab, getDrawerStore } from '@skeletonlabs/skeleton';
 	import { currentSlug } from '$lib/stores/navigationStore';
+	export let className = '';
 
 	const drawerStore = getDrawerStore();
 	// TODO: Use cms data
@@ -28,6 +29,8 @@
 		// TODO: Implement
 		throw new Error('Function not implemented.');
 	}
+
+	const iconClasses = 'material-symbols-outlined !text-xl';
 </script>
 
 <TabGroup
@@ -36,20 +39,23 @@
 	flex="flex-1"
 	rounded=""
 	border=""
-	class="bg-surface-100-800-token w-auto {$$props.class}"
+	class="bg-surface-100-800-token w-auto {className}"
+	padding="px-3 py-1"
+	spacing="space-y-0"
+	regionList="text-xs"
 >
 	<TabAnchor
 	on:click={onMenuClick}
 	>
 		<svelte:fragment slot="lead">
-			<span class="material-symbols-outlined pt-2">menu</span>
+			<span class={iconClasses}>menu</span>
 		</svelte:fragment>	
 		<span>Menü</span>
 	</TabAnchor>
 	{#each mobileNavigationItems as item}
 		<TabAnchor href={item.slug} selected={isMenuItemActive(item.slug)}>
 			<svelte:fragment slot="lead">
-				<span class="material-symbols-outlined pt-2">{item.icon}</span>
+				<span class={iconClasses}>{item.icon}</span>
 			</svelte:fragment>
 			<span>{item.title}</span>
 		</TabAnchor>
@@ -58,7 +64,7 @@
 	on:click={onSearchClick}
 	>
 		<svelte:fragment slot="lead">
-			<span class="material-symbols-outlined pt-2">search</span>
+			<span class={iconClasses}>search</span>
 		</svelte:fragment>	
 		<span>Suche</span>
 	</TabAnchor>

@@ -44,7 +44,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center pt-10 text-center">
+<div class="flex flex-col items-start pt-10 text-center">
 	<p class="text-base md:text-lg font-semibold pb-2">
 		Haben Sie die passende Information gefunden?
 	</p>
@@ -59,9 +59,9 @@
 			<input type="hidden" name="pageId" value={page.id} />
 			<input type="hidden" name="previousAction" value={userDisliked ? 'true' : ''} />
 			<button
-				class="btn hover:variant-filled-success {userLiked
+				class="chip hover:variant-filled-success {userLiked
 					? 'variant-filled-success'
-					: 'variant-ringed-success'}"
+					: 'variant-outline-success'}"
 			>
 				<span class="material-symbols-outlined">thumb_up</span>
 				<span>Ja</span>
@@ -77,7 +77,7 @@
 			<input type="hidden" name="pageId" value={page.id} />
 			<input type="hidden" name="previousAction" value={userLiked ? 'true' : ''} />
 			<button
-				class="btn hover:variant-filled-error {userDisliked
+				class="chip hover:variant-filled-error {userDisliked
 					? 'variant-filled-error'
 					: 'variant-outline-error'}"
 			>

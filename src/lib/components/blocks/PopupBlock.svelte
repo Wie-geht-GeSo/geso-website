@@ -12,7 +12,7 @@
 </script>
 
 <div class="py-5">
-    <button class="btn variant-filled-secondary self-start" use:popup={popupClick}>
+    <button class="btn variant-outline self-start" use:popup={popupClick}>
         {#if data.icon}
             <span class="material-symbols-outlined">{data.icon}</span>
         {/if}

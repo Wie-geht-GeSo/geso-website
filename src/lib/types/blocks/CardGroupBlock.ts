@@ -13,6 +13,7 @@ export interface CardBlock {
     title: string;
     subTitle: string;
     textContent: string;
-    image: string; 
+    image: string; // UUID of the image
+    imageSrc: string; // Built by pageService
     page: Page;
 }

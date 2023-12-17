@@ -29,12 +29,11 @@
 <AppBar shadow="shadow-xl">
 	<svelte:fragment slot="lead">
 		<div class="flex items-center">
-			<button class="hidden md:block lg:hidden btn mr-2" on:click={drawerOpen}>
+			<button class="btn hidden md:block lg:hidden" on:click={drawerOpen}>
 				<span class="material-symbols-outlined"> menu </span>
 			</button>
 			<a href="/home" class="flex items-center">
-				<Logo />
-				<strong class="text-xl sm:inline">{$page.data.globals.websiteName}</strong>
+				<Logo className="ml-3 mr-2"/>
 			</a>
 		</div>
 	</svelte:fragment>

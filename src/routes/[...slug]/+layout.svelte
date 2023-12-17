@@ -13,7 +13,6 @@
 	import { Toast } from '@skeletonlabs/skeleton';
 	import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
 	import TreeView from '$lib/components/TreeMenu.svelte';
-	// import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
@@ -25,7 +24,7 @@
 		if (pageUrlPath === '/home') return true;
 		return false;
 	}
-
+	
 	$: slotSidebarLeft = hideSidebarFor($page.url.pathname)
 		? 'w-0'
 		: 'bg-surface-50-900-token lg:w-auto';
@@ -49,7 +48,7 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="sidebarLeft">
-		<AppSidebar class="hidden lg:grid overflow-hidden" />
+		<AppSidebar className="hidden lg:grid overflow-hidden" />
 	</svelte:fragment>
 
 	<svelte:fragment slot="pageFooter">
@@ -57,7 +56,7 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="footer">
-		<MobileNavigationTabs class="md:hidden" />
+		<MobileNavigationTabs className="md:hidden" />
 	</svelte:fragment>
 
 	<slot />

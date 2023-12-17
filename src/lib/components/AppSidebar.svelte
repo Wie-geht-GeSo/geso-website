@@ -2,13 +2,14 @@
 	import { AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 	import { currentNavigationPathSlugs, rootMenuItems } from '$lib/stores/navigationStore';
 	import TreeMenu from './TreeMenu.svelte';
+	export let className = '';
 
 	$: isRootMenuItemActive = (slug: string): boolean => $currentNavigationPathSlugs.includes(slug);
 </script>
 
 
 <div
-	class="grid grid-cols-[auto_1fr] h-full border-r border-surface-500/30 {$$props.class}"
+	class="grid grid-cols-[auto_1fr] h-full border-r border-surface-500/30 {className}"
 >
 	<AppRail
 		class="hidden xl:grid"

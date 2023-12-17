@@ -3,7 +3,6 @@ import type { PageServerLoad } from './$types';
 import { dislikePage, getPageBySlug, likePage } from '$lib/services/pageService';
 import { transformPageContent } from '$lib/services/contentTransformationService';
 
-
 export const load: PageServerLoad = async ({ url }) => {
     if (url.pathname === '/') {
         throw redirect(301, '/home');

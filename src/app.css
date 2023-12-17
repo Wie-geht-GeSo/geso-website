@@ -1,0 +1,3 @@
+.title-gradient {
+    @apply bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent box-decoration-clone;
+}
