@@ -6,7 +6,7 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { initializeStores, Drawer } from '@skeletonlabs/skeleton';
-	import AppSidebar from '$lib/components/AppSidebar.svelte';
+	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
 	import { page } from '$app/stores';
@@ -22,9 +22,13 @@
 
 	function hideSidebarFor(pageUrlPath: string): boolean {
 		if (pageUrlPath === '/home') return true;
+		if (pageUrlPath === '/about') return true;
+		if (pageUrlPath === '/faq') return true;
+		if (pageUrlPath === '/impressum') return true;
+		if (pageUrlPath === '/datenschutzerklaerung') return true;
 		return false;
 	}
-	
+
 	$: slotSidebarLeft = hideSidebarFor($page.url.pathname)
 		? 'w-0'
 		: 'bg-surface-50-900-token lg:w-auto';
@@ -48,7 +52,7 @@
 	</svelte:fragment>
 
 	<svelte:fragment slot="sidebarLeft">
-		<AppSidebar className="hidden lg:grid overflow-hidden" />
+		<Sidebar className="hidden lg:grid overflow-hidden" />
 	</svelte:fragment>
 
 	<svelte:fragment slot="pageFooter">
