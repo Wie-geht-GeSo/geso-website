@@ -27,6 +27,6 @@ export const actions = {
         const data = await request.formData();
         const pageId = Number(data.get('pageId'));
         const previousAction = data.get('previousAction')
-        dislikePage(pageId, previousAction === 'true'); 
+        dislikePage(pageId, previousAction === 'true');
     },
 };

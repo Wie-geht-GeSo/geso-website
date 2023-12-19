@@ -5,7 +5,11 @@ export interface CardGroupBlock {
     title: string;
     subTitle: string;
     content: string;
-    cards: CardBlock[];
+    cards: CardBlockJunction[];
+}
+
+export interface CardBlockJunction {
+    card: CardBlock;
 }
 
 export interface CardBlock {

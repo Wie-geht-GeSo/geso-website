@@ -3,7 +3,7 @@ import type { Page } from "$lib/types/Page";
 import { readItem, readItems, updateItem } from "@directus/sdk";
 import { error } from "@sveltejs/kit";
 import { DIRECTUS_URL } from '$env/static/private';
-import type { CardBlock } from "$lib/types/blocks/CardGroupBlock";
+import type { CardBlock, CardBlockJunction } from "$lib/types/blocks/CardGroupBlock";
 
 
 export async function getPageBySlug(slug: string): Promise<Page> {
@@ -22,9 +22,10 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                 'editorNodes.item.page.icon',
                 // CardGroupBlock
                 'editorNodes.item.cards.title',
-                'editorNodes.item.cards.page.slug',
-                'editorNodes.item.cards.page.icon',
-                'editorNodes.item.cards.image',
+                //// CardBlock (Junction table)
+                'editorNodes.item.cards.card.*',
+                'editorNodes.item.cards.card.page.slug',
+                'editorNodes.item.cards.card.page.icon',
                 // AccordionBlock
                 'editorNodes.item.items.*',
             ] as any,
@@ -36,16 +37,18 @@ export async function getPageBySlug(slug: string): Promise<Page> {
         if (page.titleImage) {
             page.titleImageSrc = DIRECTUS_URL + '/assets/' + page.titleImage;
         }
-        // Replace each editorNodes.item.cards.page.titleImage with the actual image url -> DIRECTUS_URL + /assets/ + titleImage
+        // Build the actual image source for all images in editorNodes -> DIRECTUS_URL + /assets/ + image
         page.editorNodes.forEach((editorNode) => {
             if (editorNode.item?.cards) {
-                editorNode.item.cards.forEach((card: CardBlock) => {
-                    if (card.image) {
-                        card.imageSrc = DIRECTUS_URL + '/assets/' + card.image;
-                    }
-                });
+                editorNode.item.cards.map((junction: CardBlockJunction) => junction.card)
+                    .forEach((card: CardBlock) => {
+                        if (card.image) {
+                            card.imageSrc = DIRECTUS_URL + '/assets/' + card.image;
+                        }
+                    });
             }
         });
+
 
         return page;
     } else {
