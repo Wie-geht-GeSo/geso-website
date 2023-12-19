@@ -26,9 +26,9 @@
 
 <a
 	href={slug}
-	class="btn rounded-lg pl-1 hover:variant-filled flex whitespace-normal justify-start py-4 w-full h-full {active
+	class="btn rounded-lg pl-1 flex whitespace-normal justify-start py-4 w-full h-full {active
 		? 'bg-primary-active-token hover:variant-filled-primary'
-		: ''}"
+		: 'hover:variant-filled'}"
 	on:click={handleClick}
 >
 	<span class="material-symbols-rounded">{icon}</span>
