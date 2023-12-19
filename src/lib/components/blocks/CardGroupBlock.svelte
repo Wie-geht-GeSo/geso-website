@@ -25,8 +25,8 @@
 						<span class="material-symbols-outlined !text-4xl pt-6">{card.page.icon} </span>
 					{/if}
 				</header>
-				<section class="p-4">
-					<h1 class="h4 text-center my-3">{card.title}</h1>
+				<section class="py-4 px-1">
+					<h1 class="h4 text-center">{card.title}</h1>
 				</section>
 			</a>
 		</div>

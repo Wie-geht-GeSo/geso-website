@@ -29,6 +29,7 @@
 	let scrollToElement: HTMLElement;
 
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent; // TODO: Better way to check if page is content page
+
 </script>
 
 {#if $page.error}
@@ -40,7 +41,7 @@
 	<link rel="preload" as="image" href={data.page.titleImageSrc} />
 	{#each data.page.editorNodes as editorNode}
 		{#if editorNode.collection === 'blockCardGroup'}
-			{#each editorNode.item.cards as card}
+			{#each editorNode.item.cards as {card} (card.id)}
 				<link rel="preload" as="image" href={card.imageSrc} />
 			{/each}
 		{/if}
