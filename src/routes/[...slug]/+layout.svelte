@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { currentSlug } from '$lib/stores/navigationStore';
 	import '../../app.postcss';
 	import '../../app.css';
 	import 'material-symbols';
@@ -13,23 +14,16 @@
 	import { Toast } from '@skeletonlabs/skeleton';
 	import MobileNavigationTabs from '$lib/components/MobileNavigationTabs.svelte';
 	import TreeView from '$lib/components/TreeMenu.svelte';
+	import { isStandalonePage } from '$lib/utils';
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
 	// Disable smooth scrolling for users who prefer reduced motion
 	$: allyPageSmoothScroll = !$prefersReducedMotionStore ? 'scroll-smooth' : '';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	
 
-	function hideSidebarFor(pageUrlPath: string): boolean {
-		if (pageUrlPath === '/home') return true;
-		if (pageUrlPath === '/about') return true;
-		if (pageUrlPath === '/faq') return true;
-		if (pageUrlPath === '/impressum') return true;
-		if (pageUrlPath === '/datenschutzerklaerung') return true;
-		return false;
-	}
-
-	$: slotSidebarLeft = hideSidebarFor($page.url.pathname)
+	$: slotSidebarLeft = isStandalonePage($currentSlug)
 		? 'w-0'
 		: 'bg-surface-50-900-token lg:w-auto';
 </script>

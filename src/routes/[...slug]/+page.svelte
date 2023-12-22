@@ -5,7 +5,7 @@
 		currentPageHasParent,
 		currentSlug
 	} from '$lib/stores/navigationStore';
-	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
+	import { tocCrawler } from '@skeletonlabs/skeleton';
 	import LinkBlock from '$lib/components/blocks/LinkBlock.svelte';
 	import CardGroupBlock from '$lib/components/blocks/CardGroupBlock.svelte';
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
@@ -14,6 +14,7 @@
 	import { page } from '$app/stores';
 	import Rating from '$lib/components/Rating.svelte';
 	import PageTitleHeader from '$lib/components/PageTitleHeader.svelte';
+	import TableOfContents from '$lib/components/TableOfContents.svelte';
 
 	export let data: PageData;
 	// TODO: Move somewhere else
@@ -29,7 +30,8 @@
 	let scrollToElement: HTMLElement;
 
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent; // TODO: Better way to check if page is content page
-
+	$: widthClasses = isContentPage ? 'max-w-5xl w-full' : 'max-w-screen-xl w-full';
+	const containerClasses = "flex justify-center space-x-12";
 </script>
 
 {#if $page.error}
@@ -41,7 +43,7 @@
 	<link rel="preload" as="image" href={data.page.titleImageSrc} />
 	{#each data.page.editorNodes as editorNode}
 		{#if editorNode.collection === 'blockCardGroup'}
-			{#each editorNode.item.cards as {card} (card.id)}
+			{#each editorNode.item.cards as { card } (card.id)}
 				<link rel="preload" as="image" href={card.imageSrc} />
 			{/each}
 		{/if}
@@ -49,20 +51,26 @@
 </svelte:head>
 
 <section class="bg-surface-200-700-token {data.page.titleImage ? '' : 'py-10'}">
-	<PageTitleHeader
-		scrollToElement={scrollToElement}
-		title={data.page.title}
-		subTitle={data.page.subTitle}
-		titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}
-	/>
+	<div class="{containerClasses} px-10">
+		<div class="w-full {widthClasses} mx-auto">
+			<PageTitleHeader
+				{scrollToElement}
+				title={data.page.title}
+				subTitle={data.page.subTitle}
+				titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}
+			/>
+		</div>
+		<!-- Use invisible ToC to align title header correctly with content below -->
+		{#if isContentPage}
+			<TableOfContents className="invisible" />
+		{/if}
+	</div>
 </section>
 
-<div bind:this={scrollToElement} class="flex items-start space-x-4">
+<div id="content" bind:this={scrollToElement} class="{containerClasses} p-10">
 	<div
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
-		class="container mx-auto flex flex-col py-10 px-5 sm:p-10 space-y-4 {!isContentPage
-			? 'max-w-screen-xl'
-			: 'max-w-5xl'}"
+		class="mx-auto space-y-4 {widthClasses}"
 	>
 		{#each data.page.transformedContent || [] as section}
 			{#if section.type === 'html'}
@@ -87,9 +95,7 @@
 	</div>
 
 	{#if isContentPage}
-		<TableOfContents class="hidden lg:grid w-1/4 sticky top-20 mt-20">
-			<h1>Übersicht</h1>
-		</TableOfContents>
+		<TableOfContents />
 	{/if}
 </div>
 

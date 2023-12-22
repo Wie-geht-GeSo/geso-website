@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isStandalonePage } from '$lib/utils';
 	import {
 		currentSlug
 	} from '$lib/stores/navigationStore';
@@ -26,7 +27,7 @@
 
 </script>
 
-<header class="flex flex-col sm:flex-row items-center justify-center pl-5 py-10 sm:py-0 space-x-14">
+<header class="flex items-center {isStandalonePage($currentSlug) ? 'justify-center' : 'justify-start'} py-10 sm:py-0 space-x-32">
 	<div>
 		{#if includeBackButton}
 			<div class="flex items-start space-x-4 py-5">
@@ -60,7 +61,7 @@
 		<img
 			src={titleImageSrc}
 			alt="Titelbild"
-			class="hidden sm:block w-full sm:w-auto max-w-xs max-h-xs object-cover"
+			class="hidden sm:block w-full sm:w-auto max-w-xs max-h-xs object-cover mx-auto"
 		/>
 	{/if}
 </header>
