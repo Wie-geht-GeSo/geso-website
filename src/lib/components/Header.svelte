@@ -5,10 +5,13 @@
 		LightSwitch,
 		getDrawerStore,
 		type ModalSettings,
-		getModalStore
+		getModalStore,
+		type PopupSettings,
+		popup
 	} from '@skeletonlabs/skeleton';
 	import Logo from './Logo.svelte';
 	import ZoomButtons from './ZoomButtons.svelte';
+	import HelpPopupContent from './HelpPopupContent.svelte';
 
 	const drawerStore = getDrawerStore();
 	function drawerOpen(): void {
@@ -24,6 +27,12 @@
 		};
 		modalStore.trigger(modal);
 	}
+
+	const helpPopup: PopupSettings = {
+		event: 'click',
+		target: 'help',
+		placement: 'bottom'
+	};
 </script>
 
 <AppBar shadow="shadow-xl">
@@ -33,11 +42,22 @@
 				<span class="material-symbols-outlined"> menu </span>
 			</button>
 			<a href="/home" class="flex items-center">
-				<Logo className="ml-3 mr-2"/>
+				<Logo className="ml-3 mr-2" />
 			</a>
 		</div>
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
+		<!-- Help Popup -->
+		<div class="">
+			<button class="btn btn-sm sm:btn-base hover:variant-soft-secondary" use:popup={helpPopup}>
+				<span class="material-symbols-outlined">help_outline</span>
+				<span>Hilfe</span>
+				<span class="material-symbols-outlined">expand_more</span>
+			</button>
+
+			<HelpPopupContent />
+		</div>
+
 		<!-- Search -->
 		<div class="hidden md:inline md:ml-4">
 			<button
@@ -48,9 +68,9 @@
 				<small class="hidden md:inline-block">Suche</small>
 			</button>
 		</div>
-		
+
 		<ZoomButtons />
-		
+
 		{#if $page.data.header.lightSwitch}
 			<LightSwitch />
 		{/if}

@@ -31,7 +31,7 @@
 
 	$: isContentPage = !$currentPageHasChildren && $currentPageHasParent; // TODO: Better way to check if page is content page
 	$: widthClasses = isContentPage ? 'max-w-5xl w-full' : 'max-w-screen-xl w-full';
-	const containerClasses = "flex justify-center space-x-12";
+	const containerClasses = 'flex justify-center space-x-12';
 </script>
 
 {#if $page.error}
@@ -40,7 +40,9 @@
 
 <!-- Preload images -->
 <svelte:head>
-	<link rel="preload" as="image" href={data.page.titleImageSrc} />
+	{#if data.page.titleImage}
+		<link rel="preload" as="image" href={data.page.titleImageSrc} />
+	{/if}
 	{#each data.page.editorNodes as editorNode}
 		{#if editorNode.collection === 'blockCardGroup'}
 			{#each editorNode.item.cards as { card } (card.id)}
@@ -54,7 +56,7 @@
 	<div class="{containerClasses} px-10">
 		<div class="w-full {widthClasses} mx-auto">
 			<PageTitleHeader
-				{scrollToElement}
+				scrollToElement={scrollToElement}
 				title={data.page.title}
 				subTitle={data.page.subTitle}
 				titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}

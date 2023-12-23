@@ -19,7 +19,7 @@
 </script>
 
 <button
-	class="btn btn-icon-sm hidden sm:flex variant-filled"
+	class="btn btn-icon-sm hidden sm:flex variant-outline-secondary hover:variant-soft-secondary"
 	on:click={zoomIn}
 	title="Schrift größer"
 	aria-label="Hineinzoomen"
@@ -27,7 +27,7 @@
 	<span class="material-symbols-outlined">add</span>
 </button>
 <button
-	class="btn btn-icon-sm hidden sm:flex variant-filled"
+	class="btn btn-icon-sm hidden sm:flex variant-outline-secondary hover:variant-soft-secondary"
 	on:click={zoomOut}
 	title="Schrift kleiner"
 	aria-label="Herauszoomen"
