@@ -3,8 +3,6 @@ import type { Page } from "../Page";
 export interface CardGroupBlock {
     id: number;
     title: string;
-    subTitle: string;
-    content: string;
     cards: CardBlockJunction[];
 }
 
