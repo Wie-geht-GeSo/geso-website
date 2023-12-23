@@ -61,7 +61,7 @@
 		<img
 			src={titleImageSrc}
 			alt="Titelbild"
-			class="hidden sm:block w-full sm:w-auto max-w-xs max-h-xs object-cover mx-auto"
-		/>
+			class="hidden sm:block sm:w-1/3 lg:w-1/2 max-w-xs object-cover mx-auto"
+			/>
 	{/if}
 </header>
