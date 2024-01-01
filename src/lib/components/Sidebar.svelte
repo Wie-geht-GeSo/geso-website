@@ -27,7 +27,7 @@
 		{/each}
 	</AppRail>
 
-	<section class="pl-2 overflow-y-auto min-w-0 w-[500px] md:w-[300px] xl:w-[350px]">
+	<section class="pl-2 overflow-y-auto min-w-0 w-[500px] md:w-[300px] xl:w-[320px]">
 		<TreeMenu />
 	</section>
 </div>

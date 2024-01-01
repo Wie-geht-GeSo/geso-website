@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { isStandalonePage } from '$lib/utils';
-	import {
-		currentSlug
-	} from '$lib/stores/navigationStore';
-    import { browser } from '$app/environment';
+	import { currentSlug } from '$lib/stores/navigationStore';
+	import { browser } from '$app/environment';
 
+	export let scrollToElement: HTMLElement;
+	export let title: string;
+	export let subTitle: string | null;
+	export let titleImageSrc: string | null;
 
-    export let scrollToElement: HTMLElement;
-    export let title: string;
-    export let subTitle: string | null;
-    export let titleImageSrc: string | null;
-
-    function goBack() {
+	function goBack() {
 		history.back();
 	}
 
@@ -21,47 +18,67 @@
 		}
 	}
 
-	let noBackButtonSlugs = ['home'];
-	$: includeBackButton = !noBackButtonSlugs.includes($currentSlug);
-    $: isHomePage = $currentSlug === 'home';
-
+	let noBreadcrumbSlugs = ['home'];
+	$: includeBreadcrumbs = !noBreadcrumbSlugs.includes($currentSlug);
+	$: isHomePage = $currentSlug === 'home';
 </script>
 
-<header class="flex items-center {isStandalonePage($currentSlug) ? 'justify-center' : 'justify-start'} py-10 sm:py-0 space-x-32">
-	<div>
-		{#if includeBackButton}
-			<div class="flex items-start space-x-4 py-5">
-				<button
-					class="btn btn-sm variant-outline-secondary hover:variant-filled-secondary"
-					on:click={goBack}
-				>
-					<span class="material-symbols-outlined">arrow_back</span>
-					<span>Zurück</span>
-				</button>
+<header
+	class="flex items-center {isStandalonePage($currentSlug)
+		? 'justify-evenly'
+		: 'justify-between'} space-x-10 h-full"
+>
+	<div class="flex flex-col h-full my-10">
+		{#if includeBreadcrumbs}
+			<div class="flex items-start py-5">
+				<ol class="breadcrumb">
+					<li class="crumb">
+						<a
+							class="btn btn-sm hover:variant-soft-primary rounded-md"
+							href="/home"
+						>
+							<span class="material-symbols-outlined">home</span>
+							<span>Startseite</span>
+					</a>
+					</li>
+					<li class="crumb-separator" aria-hidden>|</li>
+					<li class="crumb">
+						<button
+							class="btn btn-sm hover:variant-soft-primary rounded-md"
+							on:click={goBack}
+						>
+							<span class="material-symbols-outlined">arrow_back</span>
+							<span>Schritt zurück</span>
+						</button>
+					</li>
+				</ol>
 			</div>
 		{/if}
-		<h1 class="h1 {isHomePage ? 'font-bold' : ''}">
-			<span class="title-gradient">{title}</span>
-		</h1>
-		{#if subTitle}
-			<p class="h4 pt-3">{subTitle}</p>
-		{/if}
-		{#if isHomePage}
-			<button
-				class="btn variant-outline-primary hover:variant-filled-primary mt-10"
-				on:click={scrollToContent}
-			>
-				<span>Start</span>
-				<span class="material-symbols-outlined">expand_more</span>
-			</button>
-		{/if}
+
+		<div class="mt-auto mb-auto">
+			<h1 class="h1 {isHomePage ? 'font-bold' : ''}">
+				<span class="title-gradient">{title}</span>
+			</h1>
+			{#if subTitle}
+				<p class="h4 pt-3">{subTitle}</p>
+			{/if}
+			{#if isHomePage}
+				<button
+					class="btn variant-outline-primary hover:variant-filled-primary mt-10"
+					on:click={scrollToContent}
+				>
+					<span>Start</span>
+					<span class="material-symbols-outlined">expand_more</span>
+				</button>
+			{/if}
+		</div>
 	</div>
 
 	{#if titleImageSrc}
 		<img
 			src={titleImageSrc}
 			alt="Titelbild"
-			class="hidden sm:block sm:w-1/3 lg:w-1/2 max-w-xs object-cover mx-auto"
-			/>
+			class="hidden sm:block sm:h-56 lg:h-96 max-h-96 object-cover"
+		/>
 	{/if}
 </header>
