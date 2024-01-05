@@ -17,7 +17,7 @@ export async function triggerContactModal(modalStore: ModalStore): Promise<void>
             component: 'modalContactForm'
         };
         modal.response = (formResponse: boolean) => {
-            resolve(formResponse);
+            if (formResponse) resolve(formResponse);
         };
         modalStore.trigger(modal);
     }).then(async (formResponse: any) => {
