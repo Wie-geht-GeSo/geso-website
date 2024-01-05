@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { CardGroupBlock } from '$lib/types/blocks/CardGroupBlock';
-	import Error from '../error.svelte';
+	import Error from '../Error.svelte';
 
 	export let data: CardGroupBlock;
 </script>
