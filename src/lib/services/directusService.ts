@@ -5,6 +5,7 @@ import type { Globals } from '$lib/types/Globals';
 import type { Footer } from '$lib/types/Footer';
 import type { NavigationPage } from '../types/navigation/NavigationPage';
 import type { Page } from '../types/Page';
+import type { Feedback } from '$lib/types/Feedback';
 
 interface Schema {
     globals: Globals;
@@ -13,6 +14,7 @@ interface Schema {
     pages: Page[];
     page: Page;
     navigationPages: NavigationPage[];
+    feedback: Feedback;
 }
 
 

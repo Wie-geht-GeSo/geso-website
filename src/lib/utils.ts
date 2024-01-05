@@ -1,3 +1,5 @@
+import { getModalStore, type ModalSettings, type ModalStore } from "@skeletonlabs/skeleton";
+
 export function isStandalonePage(slug: string): boolean {
     if (slug === 'home') return true;
     if (slug === 'about') return true;
@@ -6,4 +8,25 @@ export function isStandalonePage(slug: string): boolean {
     if (slug === 'impressum') return true;
     if (slug === 'datenschutzerklaerung') return true;
     return false;
+}
+
+export async function triggerContactModal(modalStore: ModalStore): Promise<void> {
+    new Promise<boolean>((resolve) => {
+        const modal: ModalSettings = {
+            type: 'component',
+            component: 'modalContactForm'
+        };
+        modal.response = (formResponse: boolean) => {
+            resolve(formResponse);
+        };
+        modalStore.trigger(modal);
+    }).then(async (formResponse: any) => {
+        await fetch('/api/contact', {
+            method: 'POST',
+            body: JSON.stringify(formResponse),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+    });
 }

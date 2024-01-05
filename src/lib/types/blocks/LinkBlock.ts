@@ -5,4 +5,5 @@ export interface LinkBlock {
     name: string;
     url?: string;
     page?: Page;
+    contactForm?: boolean;
 }
