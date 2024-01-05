@@ -106,10 +106,12 @@ function transformContent(content: ContentBlock): TransformedContentSection[] {
 
 
 export function transformPageContent(page: Page): void {
-    if (page.content) {
+    if (page && page.content) {
         // Inject editor nodes into content directly
         // https://github.com/formfcw/directus-extension-flexible-editor
-        injectDataIntoContent(page.editorNodes, page.content);
+        if (page.editorNodes) {
+            injectDataIntoContent(page.editorNodes, page.content);
+        }
         // Add transformed editor content (html and components) to page
         const content = page.content as ContentBlock;
         page.transformedContent = transformContent(content);

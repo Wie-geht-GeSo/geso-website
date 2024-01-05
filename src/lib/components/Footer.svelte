@@ -1,6 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { getModalStore } from '@skeletonlabs/skeleton';
 	import Logo from './Logo.svelte';
+	import { triggerContactModal } from '$lib/utils';
+
+	const modalStore = getModalStore();
+
+	function onContactClick(e: MouseEvent): void {
+		triggerContactModal(modalStore);
+	}
 
 	const versionInfo = `Version ${__VERSION__}`;
 	// Base Classes
@@ -10,7 +18,6 @@
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0';
 	const cRowTwo =
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
-
 </script>
 
 <div class="page-footer {cBase}">
@@ -21,22 +28,37 @@
 				class="grid grid-cols-1 gap-2 place-content-center place-items-center md:place-items-start"
 			>
 				<Logo />
-				<p class="!text-sm text-center md:text-start">{$page.data.globals.websiteSlogan}</p>
-				<p class="!text-sm mt-2 text-center md:text-start dynamic-html">{@html $page.data.footer.content || ""}</p>
+				<p class="!text-sm text-center md:text-start">
+					{$page?.data?.globals?.websiteSlogan ||
+						'Digitaler Wegweiser durch das Gesundheits- und Sozialsystem.'}
+				</p>
+				<p class="!text-sm mt-2 text-center md:text-start dynamic-html">
+					{@html $page?.data?.footer?.content || ''}
+				</p>
 			</div>
 			<div class="grid grid-cols-3 md:gap-20 text-center md:text-start">
-				{#each $page.data.footer.blocks as block (block.id)}
-					{#if block.collection === 'blockLinkGroup'}
-						<div class="space-y-6">
-							<h6 class="h6">{block.item.title}</h6>
-							<ul class="space-y-3">
-								{#each block.item.links as link}
-									<li><a class="anchor" href={link.url ?? link.page.slug}>{link.name}</a></li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-				{/each}
+				{#if $page?.data?.footer && $page?.data?.footer?.blocks}
+					{#each $page.data.footer.blocks as block (block.id)}
+						{#if block.collection === 'blockLinkGroup'}
+							<div class="space-y-6">
+								<h6 class="h6">{block.item.title}</h6>
+								<ul class="space-y-3">
+									{#each block.item.links || [] as link}
+										{#if link.contactForm}
+											<li>
+												<button class="anchor" on:click={onContactClick}>{link.name}</button>
+											</li>
+										{:else}
+											<li>
+												<a class="anchor" href={link.url ?? link.page.slug}>{link.name}</a>
+											</li>
+										{/if}
+									{/each}
+								</ul>
+							</div>
+						{/if}
+					{/each}
+				{/if}
 			</div>
 		</section>
 
@@ -45,14 +67,16 @@
 		<!-- Row 2 -->
 		<section class={cRowTwo}>
 			<p>
-				{#each $page.data.footer.bottomLinks as bottomLink, index}
-					<a class="anchor" target="_blank" rel="noreferrer" href={bottomLink.url}>
-						{bottomLink.name || bottomLink.url}
-					</a>
-					{#if index < $page.data.footer.bottomLinks.length - 1}
-						<span class="opacity-10 mx-2">|</span>
-					{/if}
-				{/each}
+				{#if $page?.data?.footer?.bottomLinks}
+					{#each $page.data.footer.bottomLinks as bottomLink, index}
+						<a class="anchor" target="_blank" rel="noreferrer" href={bottomLink.url}>
+							{bottomLink.name || bottomLink.url}
+						</a>
+						{#if index < $page.data.footer.bottomLinks.length - 1}
+							<span class="opacity-10 mx-2">|</span>
+						{/if}
+					{/each}
+				{/if}
 			</p>
 			<p class="!text-sm opacity-80">{versionInfo}</p>
 			<p class="!text-sm opacity-80">

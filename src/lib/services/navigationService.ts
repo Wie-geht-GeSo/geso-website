@@ -21,18 +21,23 @@ async function buildNavigationTree(navigationPages: NavigationPage[]): Promise<N
 
 
 export async function fetchAllNavigationPages(): Promise<NavigationPage[]> {
-    const pages = await directusRest.request<NavigationPage[]>(
-        readItems('pages', {
-            filter: {
-                "_or": [
-                    { "slug": { "_eq": "home" } }, // Home page
-                    { "parentPage": { "_nnull": true } } // All pages with a parent page
-                ]
-            },
-            fields: ['id', 'slug', 'navigationTitle', 'icon', 'parentPage.id'],
-        } as any)
-    );
-    return pages;
+    try {
+        const pages = await directusRest.request<NavigationPage[]>(
+            readItems('pages', {
+                filter: {
+                    "_or": [
+                        { "slug": { "_eq": "home" } }, // Home page
+                        { "parentPage": { "_nnull": true } } // All pages with a parent page
+                    ]
+                },
+                fields: ['id', 'slug', 'navigationTitle', 'icon', 'parentPage.id'],
+            } as any)
+        );
+        return pages;
+    } catch (e) {
+        console.error('Error fetching navigation pages:', e);
+    }
+    return [];
 }
 
 export async function getNavigationTreeRoot(): Promise<NavigationPage | undefined> {

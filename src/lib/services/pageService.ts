@@ -1,78 +1,105 @@
 import { directusRest } from "$lib/services/directusService";
 import type { Page } from "$lib/types/Page";
-import { readItem, readItems, updateItem } from "@directus/sdk";
+import { createItem, readItem, readItems, updateItem } from "@directus/sdk";
 import { error } from "@sveltejs/kit";
 import { DIRECTUS_URL } from '$env/static/private';
 import type { CardBlock, CardBlockJunction } from "$lib/types/blocks/CardGroupBlock";
+import type { Feedback } from "$lib/types/Feedback";
+import { randomUUID } from "crypto";
 
 
 export async function getPageBySlug(slug: string): Promise<Page> {
-    const pages = await directusRest.request<Page[]>(
-        readItems('pages', {
-            filter: {
-                slug: { _eq: slug },
-            },
-            fields: [
-                // General
-                '*',
-                'editorNodes.*',
-                'editorNodes.item.*',
-                // LinkBlock
-                'editorNodes.item.page.slug',
-                'editorNodes.item.page.icon',
-                // CardGroupBlock
-                'editorNodes.item.cards.title',
-                //// CardBlock (Junction table)
-                'editorNodes.item.cards.card.*',
-                'editorNodes.item.cards.card.page.slug',
-                'editorNodes.item.cards.card.page.icon',
-                // AccordionBlock
-                'editorNodes.item.items.*',
-            ] as any,
-            limit: 1,
-        })
-    );
-    if (pages.length > 0) {
-        const page = pages[0];
-        if (page.titleImage) {
-            page.titleImageSrc = DIRECTUS_URL + '/assets/' + page.titleImage;
-        }
-        // Build the actual image source for all images in editorNodes -> DIRECTUS_URL + /assets/ + image
-        page.editorNodes.forEach((editorNode) => {
-            if (editorNode.item?.cards) {
-                editorNode.item.cards.map((junction: CardBlockJunction) => junction.card)
-                    .forEach((card: CardBlock) => {
-                        if (card.image) {
-                            card.imageSrc = DIRECTUS_URL + '/assets/' + card.image;
+    try {
+        const pages = await directusRest.request<Page[]>(
+            readItems('pages', {
+                filter: {
+                    slug: { _eq: slug },
+                },
+                fields: [
+                    // General
+                    '*',
+                    'editorNodes.*',
+                    'editorNodes.item.*',
+                    // LinkBlock
+                    'editorNodes.item.page.slug',
+                    'editorNodes.item.page.icon',
+                    // CardGroupBlock
+                    'editorNodes.item.cards.title',
+                    //// CardBlock (Junction table)
+                    'editorNodes.item.cards.card.*',
+                    'editorNodes.item.cards.card.page.slug',
+                    'editorNodes.item.cards.card.page.icon',
+                    // AccordionBlock
+                    'editorNodes.item.items.*',
+                ] as any,
+                limit: 1,
+            })
+        );
+
+        if (pages.length > 0) {
+            const page = pages[0];
+            if (page.titleImage) {
+                page.titleImageSrc = `${DIRECTUS_URL}/assets/${page.titleImage}`;
+            }
+            // Build the actual image source for all images in editorNodes -> DIRECTUS_URL + /assets/ + image
+            page.editorNodes?.forEach((editorNode) => {
+                if (editorNode.item?.cards) {
+                    editorNode.item.cards.forEach((junction: CardBlockJunction) => {
+                        if (junction.card && junction.card.image) {
+                            junction.card.imageSrc = `${DIRECTUS_URL}/assets/${junction.card.image}`;
                         }
                     });
-            }
-        });
+                }
+            });
 
-
-        return page;
-    } else {
-        error(404, { message: 'Page with slug ' + slug + ' not found' });
+            return page;
+        } else {
+            error(404, { message: `Page with slug ${slug} not found` });
+        }
+    } catch (e) {
+        console.error('Failed to get page by slug:', e);
     }
+
+
+    // Return an error Page
+    return {
+        id: -1,
+        title: 'Error',
+        subTitle: 'Diese Seite konnte nicht gefunden werden.',
+        titleImage: randomUUID(),
+        titleImageSrc: 'https://images.unsplash.com/photo-1529927066849-79b791a69825?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        navigationTitle: '',
+        slug: '',
+        blocks: [],
+        icon: '',
+        editorNodes: [],
+        likes: 0,
+        dislikes: 0,
+    };
+
 }
 
 async function ratePage(pageId: number, action: "like" | "dislike", previouslyOpposite: boolean): Promise<void> {
-    // Get the current likes and dislikes
-    const page = await directusRest.request<Page>(
-        readItem('pages', pageId, {
-            fields: ['likes', 'dislikes'],
-        })
-    );
-
-    if (page) {
-        // If the user previously disliked the page and now likes it, or vice versa, we need to also decrement the opposite rating
-        const updatedLikes = action === 'like' ? page.likes + 1 : (previouslyOpposite ? page.likes - 1 : page.likes);
-        const updatedDislikes = action === 'dislike' ? page.dislikes + 1 : (previouslyOpposite ? page.dislikes - 1 : page.dislikes);
-        await directusRest.request(
-            updateItem('pages', pageId, { likes: updatedLikes, dislikes: updatedDislikes })
+    try {
+        // Get the current likes and dislikes
+        const page = await directusRest.request<Page>(
+            readItem('pages', pageId, {
+                fields: ['likes', 'dislikes'],
+            })
         );
-    } else {
-        error(404, 'Page with id ' + pageId + ' not found');
+
+        if (page) {
+            // If the user previously disliked the page and now likes it, or vice versa, we need to also decrement the opposite rating
+            const updatedLikes = action === 'like' ? page.likes + 1 : (previouslyOpposite ? page.likes - 1 : page.likes);
+            const updatedDislikes = action === 'dislike' ? page.dislikes + 1 : (previouslyOpposite ? page.dislikes - 1 : page.dislikes);
+            await directusRest.request(
+                updateItem('pages', pageId, { likes: updatedLikes, dislikes: updatedDislikes })
+            );
+        } else {
+            console.error('Page with id ' + pageId + ' not found')
+        }
+    } catch (e) {
+        console.error('Failed to rate page:', e);
     }
 }
 
@@ -82,5 +109,13 @@ export async function likePage(pageId: number, previouslyDisliked: boolean): Pro
 
 export async function dislikePage(pageId: number, previouslyLiked: boolean): Promise<void> {
     await ratePage(pageId, 'dislike', previouslyLiked);
+}
+
+export async function submitContactForm(feedback: Feedback): Promise<void> {
+    try {
+        await directusRest.request(createItem('feedback', feedback));
+    } catch (e) {
+        console.error('Failed to submit contact form:', e);
+    }
 }
 

@@ -40,13 +40,15 @@
 
 <!-- Preload images -->
 <svelte:head>
-	{#if data.page.titleImage}
-		<link rel="preload" as="image" href={data.page.titleImageSrc} />
+	{#if data?.page?.titleImage}
+		<link rel="preload" as="image" href={data.page.titleImageSrc || ''} />
 	{/if}
-	{#each data.page.editorNodes as editorNode}
-		{#if editorNode.collection === 'blockCardGroup'}
+	{#each data.page.editorNodes ?? [] as editorNode}
+		{#if editorNode.item && editorNode.item.cards}
 			{#each editorNode.item.cards as { card } (card.id)}
-				<link rel="preload" as="image" href={card.imageSrc} />
+				{#if card && card.imageSrc}
+					<link rel="preload" as="image" href={card.imageSrc || ''} />
+				{/if}
 			{/each}
 		{/if}
 	{/each}
@@ -56,7 +58,7 @@
 	<div class="{containerClasses} pl-10">
 		<div class="w-full {widthClasses} mx-auto">
 			<PageTitleHeader
-				scrollToElement={scrollToElement}
+				{scrollToElement}
 				title={data.page.title}
 				subTitle={data.page.subTitle}
 				titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}
@@ -74,7 +76,7 @@
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
 		class="mx-auto space-y-4 {widthClasses}"
 	>
-		{#each data.page.transformedContent || [] as section}
+		{#each data?.page?.transformedContent || [] as section}
 			{#if section.type === 'html'}
 				<div class="dynamic-html">{@html section.data}</div>
 			{:else}

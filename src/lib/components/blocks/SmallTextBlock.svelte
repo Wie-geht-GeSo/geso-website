@@ -1,7 +1,9 @@
 <script lang="ts">
-	import type { SmallTextBlock } from "$lib/types/blocks/SmallTextBlock";
+	import type { SmallTextBlock } from '$lib/types/blocks/SmallTextBlock';
 
 	export let data: SmallTextBlock;
 </script>
 
-<p class="!text-sm opacity-80">{@html data.content}</p>
+{#if data && data.content}
+	<p class="!text-sm opacity-80">{@html data.content}</p>
+{/if}

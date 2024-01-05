@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { TabGroup, TabAnchor, Tab, getDrawerStore } from '@skeletonlabs/skeleton';
-	import { currentSlug } from '$lib/stores/navigationStore';
+	import { TabGroup, TabAnchor, getDrawerStore } from '@skeletonlabs/skeleton';
 	export let className = '';
 
 	const drawerStore = getDrawerStore();
-	// TODO: Use cms data
 	let mobileNavigationItems = [
 		{
 			slug: 'home',
@@ -13,7 +11,6 @@
 		}
 	];
 
-	$: isMenuItemActive = (slug: string) => $currentSlug === slug;
 
 	function onMenuClick() {
 		drawerStore.open();

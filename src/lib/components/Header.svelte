@@ -14,10 +14,11 @@
 	import HelpPopupContent from './HelpPopupContent.svelte';
 
 	const drawerStore = getDrawerStore();
+	const modalStore = getModalStore();
+	
 	function drawerOpen(): void {
 		drawerStore.open({});
 	}
-	const modalStore = getModalStore();
 
 	function triggerSearch(): void {
 		const modal: ModalSettings = {
@@ -27,6 +28,7 @@
 		};
 		modalStore.trigger(modal);
 	}
+
 
 	const helpPopup: PopupSettings = {
 		event: 'click',
@@ -49,7 +51,7 @@
 	<svelte:fragment slot="trail">
 		<!-- Help Popup -->
 		<div class="">
-			<button class="btn btn-sm sm:btn-base hover:variant-soft-secondary" use:popup={helpPopup}>
+			<button class="btn btn-sm sm:btn-base hover:variant-soft-primary" use:popup={helpPopup}>
 				<span class="material-symbols-outlined">help_outline</span>
 				<span>Hilfe</span>
 				<span class="material-symbols-outlined">expand_more</span>
@@ -61,7 +63,7 @@
 		<!-- Search -->
 		<div class="hidden md:inline md:ml-4">
 			<button
-				class="btn space-x-4 variant-soft hover:variant-soft-secondary"
+				class="btn space-x-4 variant-soft hover:variant-soft-primary"
 				on:click={triggerSearch}
 			>
 				<span class="material-symbols-outlined">search</span>
@@ -71,7 +73,7 @@
 
 		<ZoomButtons />
 
-		{#if $page.data.header.lightSwitch}
+		{#if $page?.data?.header?.lightSwitch !== false}
 			<LightSwitch />
 		{/if}
 	</svelte:fragment>
