@@ -40,17 +40,8 @@
 
 <!-- Preload images -->
 <svelte:head>
-	{#if data?.page?.titleImage}
-		<link rel="preload" as="image" href={data.page.titleImageSrc || ''} />
-	{/if}
-	{#each data.page.editorNodes ?? [] as editorNode}
-		{#if editorNode.item && editorNode.item.cards}
-			{#each editorNode.item.cards as { card } (card.id)}
-				{#if card && card.imageSrc}
-					<link rel="preload" as="image" href={card.imageSrc || ''} />
-				{/if}
-			{/each}
-		{/if}
+	{#each data.page.preloadImages as preloadImage}
+		<link rel="preload" as="image" href={preloadImage} />
 	{/each}
 </svelte:head>
 

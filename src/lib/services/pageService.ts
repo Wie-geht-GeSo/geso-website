@@ -20,6 +20,7 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                     '*',
                     'editorNodes.*',
                     'editorNodes.item.*',
+                    'childPages.titleImage',
                     // LinkBlock
                     'editorNodes.item.page.slug',
                     'editorNodes.item.page.icon',
@@ -38,19 +39,37 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 
         if (pages.length > 0) {
             const page = pages[0];
-            if (page.titleImage) {
-                page.titleImageSrc = `${DIRECTUS_URL}/assets/${page.titleImage}`;
+
+            function buildImageSrc(image: string): string {
+                return `${DIRECTUS_URL}/assets/${image}`;
             }
-            // Build the actual image source for all images in editorNodes -> DIRECTUS_URL + /assets/ + image
+
+            /* Build the actual image sources and preload them */
+            page.preloadImages = [];
+            if (page.titleImage) {
+                page.titleImageSrc = buildImageSrc(page.titleImage);
+                page.preloadImages.push(page.titleImageSrc);
+            }
+
+            // Card images
             page.editorNodes?.forEach((editorNode) => {
                 if (editorNode.item?.cards) {
                     editorNode.item.cards.forEach((junction: CardBlockJunction) => {
                         if (junction.card && junction.card.image) {
-                            junction.card.imageSrc = `${DIRECTUS_URL}/assets/${junction.card.image}`;
+                            junction.card.imageSrc = buildImageSrc(junction.card.image);
+                            page.preloadImages.push(junction.card.imageSrc);
                         }
                     });
                 }
             });
+
+            // Title image of first child pages for potential next navigation
+            // Note: This leads to better usability but potentially unnecessary image preloading
+            if (page.childPages) {
+                page.childPages.forEach((childPage) => {
+                    if (childPage.titleImage) page.preloadImages.push(buildImageSrc(childPage.titleImage));
+                });
+            }
 
             return page;
         } else {
@@ -67,6 +86,7 @@ export async function getPageBySlug(slug: string): Promise<Page> {
         title: 'Error',
         subTitle: 'Diese Seite konnte nicht gefunden werden.',
         titleImage: randomUUID(),
+        preloadImages: [],
         titleImageSrc: 'https://images.unsplash.com/photo-1529927066849-79b791a69825?q=80&w=3869&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         navigationTitle: '',
         slug: '',
@@ -78,6 +98,7 @@ export async function getPageBySlug(slug: string): Promise<Page> {
     };
 
 }
+
 
 async function ratePage(pageId: number, action: "like" | "dislike", previouslyOpposite: boolean): Promise<void> {
     try {

@@ -9,6 +9,7 @@ export interface Page {
     subTitle: string;
     titleImage: UUID; // UUID of the image
     titleImageSrc: string;  // Built by pageService
+    preloadImages: string[];
     navigationTitle: string;
     slug: string;
     blocks: Block[];
