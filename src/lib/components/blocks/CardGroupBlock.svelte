@@ -26,7 +26,7 @@
 									<img src={card.imageSrc} class="w-full object-cover object-top" alt="Post" />
 								</div>
 							{:else}
-								<span class="material-symbols-outlined !text-4xl pt-6">{card.page.icon} </span>
+								<span class="material-symbols-outlined !text-4xl pt-6">{card.page?.icon || "article"} </span>
 							{/if}
 						</header>
 						<section class="py-4 px-1">
