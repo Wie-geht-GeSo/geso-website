@@ -1,9 +1,8 @@
-version: '3'
 services:
   database:
     image: postgres:13
     volumes:
-      - ./data/database:/var/lib/postgresql/data
+      - ./cms/data/database:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
@@ -15,11 +14,11 @@ services:
     image: redis:6
 
   directus:
-    build: .directus/
+    build: ./cms
     ports:
       - 8055:8055
     volumes:
-      - ./uploads:/directus/uploads
+      - ./cms/uploads:/directus/uploads
       # If you want to load extensions from the host
       # - ./extensions:/directus/extensions
     depends_on:

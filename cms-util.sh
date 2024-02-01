@@ -3,11 +3,11 @@
 
 operation="$1"
 backup_name="$2"
-backup_dirs="data/ uploads/"
-backup_base_path="backups/directus_backup_"
+backup_dirs="cms/data/ cms/uploads/"
+backup_base_path="cms/backups/directus_backup_"
 
 # Create the backups directory if it doesn't exist
-mkdir -p backups
+mkdir -p cms/backups
 
 declare -A backup_map # Declare an associative array
 
@@ -16,7 +16,7 @@ function list_available_backups {
     local i=1
 
     # List files with date, sort by date (newest last), extract and format date and name
-    for file in $(ls -tr backups/directus_backup_*.zip); do
+    for file in $(ls -tr $backup_base_path*.zip); do
         local name=$(basename "$file" .zip | sed 's/directus_backup_//')
         local date_time=$(date -r "$file" +"%d. %b %H:%M")
         printf "%-35s %s\n" "$name" "$date_time"
