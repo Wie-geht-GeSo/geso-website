@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { TabGroup, TabAnchor, getDrawerStore } from '@skeletonlabs/skeleton';
+	import { TabGroup, TabAnchor, getDrawerStore, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
 	export let className = '';
 
 	const drawerStore = getDrawerStore();
+	const modalStore = getModalStore();
 	let mobileNavigationItems = [
 		{
 			slug: 'home',
@@ -17,8 +18,12 @@
 	}
 
 	function onSearchClick(e: MouseEvent): void {
-		// TODO: Implement
-		throw new Error('Function not implemented.');
+		const modal: ModalSettings = {
+			type: 'component',
+			component: 'modalSearch',
+			position: 'item-start'
+		};
+		modalStore.trigger(modal);
 	}
 
 	const iconClasses = 'material-symbols-outlined !text-xl';

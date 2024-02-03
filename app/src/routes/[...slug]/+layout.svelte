@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ModalSearch from './../../lib/components/ModalSearch.svelte';
 	import ModalContactForm from './../../lib/components/ModalContactForm.svelte';
 	import { currentSlug } from '$lib/stores/navigationStore';
 	import '../../app.postcss';
@@ -27,7 +28,8 @@
 	initializeStores();
 	const drawerStore = getDrawerStore();
 	const modalRegistry: Record<string, ModalComponent> = {
-		modalContactForm: { ref: ModalContactForm }
+		modalContactForm: { ref: ModalContactForm },
+		modalSearch: { ref: ModalSearch }
 	};
 
 	// Workaround to fix sveltekit scroll reset bug
