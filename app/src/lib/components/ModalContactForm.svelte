@@ -29,7 +29,7 @@
 </script>
 
 {#if $modalStore[0]}
-	<div class="modal-example-form card p-4 w-modal shadow-xl space-y-4">
+	<div class="card p-4 w-modal shadow-xl space-y-4">
 		<header class="text-2xl font-bold">Kontakt</header>
 		<article>Senden Sie uns eine Nachricht</article>
 		<form class="modal-form border border-surface-500 p-4 space-y-4 rounded-container-token">
