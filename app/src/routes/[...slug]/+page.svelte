@@ -46,7 +46,7 @@
 </svelte:head>
 
 <section class="bg-surface-200-700-token {data.page.titleImage ? '' : 'py-10'}">
-	<div class="{containerClasses} pl-10">
+	<div class="{containerClasses} px-5 md:px-10">
 		<div class="w-full {widthClasses} mx-auto">
 			<PageTitleHeader
 				{scrollToElement}
@@ -62,7 +62,7 @@
 	</div>
 </section>
 
-<div id="content" bind:this={scrollToElement} class="{containerClasses} pl-10 pr-2 py-10">
+<div id="content" bind:this={scrollToElement} class="{containerClasses} px-5 md:px-10 py-10">
 	<div
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
 		class="mx-auto space-y-4 {widthClasses}"
