@@ -25,9 +25,9 @@
 		searchLoading = true;
 		try {
 			const response = await fetch(`/api/search?query=${encodeURIComponent(searchTerm)}`);
-			results = response.json(); // Use the array of {title, slug}
+			results = await response.json(); // Use the array of {title, slug}
 		} catch (error) {
-			console.error('There was a problem with the fetch operation:', error);
+			console.error("Couldn't reach search api: ", error);
 			results = [];
 		} finally {
 			searchLoading = false;
