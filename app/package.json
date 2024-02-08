@@ -58,6 +58,7 @@
     "@tiptap/pm": "^2.1.13",
     "directus-extension-flexible-editor": "^1.1.7",
     "dotenv": "^16.3.1",
-    "material-symbols": "^0.14.1"
+    "material-symbols": "^0.14.1",
+    "openai": "^4.26.1"
   }
 }
