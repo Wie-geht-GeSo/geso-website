@@ -38,12 +38,14 @@ This extension is used to provide an editor that allows to mix and match rich te
 `contentTransformationService.ts` is used to transform the json response to html and svelte components.
 
 #### Steps to add a new block
-1. Follow the steps in the extension readme to add a new block in Directus
-2. Add access rights for the new block in Directus
-2. Add a new type in `src/lib/types/blocks/`
-3. Extend the fields when fetching the directus data in `pageService.ts`
-4. Add a new block component in `src/lib/components/blocks/`
-6. Add the directus collection name and component to the map in `+page.svelte`
+
+1. Follow the steps in the extension readme to add a new block in Directus.
+2. Add a new editor block in Directus with a M2O relation to the new block collection (**Note**: This wrapper block is a workaround for using existing blocks directly in the editor).
+3. Add access rights for the new block in Directus.
+4. Add a new type in `src/lib/types/blocks/`.
+5. Extend the fields when fetching the directus data in `pageService.ts`.
+6. Add a new block component in `src/lib/components/blocks/`.
+7. Add the Directus collection name and component to the map in `+page.svelte`.
 
 
 

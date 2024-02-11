@@ -20,11 +20,11 @@
 	// TODO: Move somewhere else
 	// key: directus collection name, value: component
 	const components: { [key: string]: any } = {
-		blockLink: LinkBlock,
-		blockAccordion: AccordionBlock,
-		blockCardGroup: CardGroupBlock,
-		blockPopup: PopupBlock,
-		blockSmallText: SmallTextBlock
+		link: LinkBlock,
+		accordion: AccordionBlock,
+		cardGroup: CardGroupBlock,
+		popup: PopupBlock,
+		smallText: SmallTextBlock
 		// Add other block components as needed
 	};
 	let scrollToElement: HTMLElement;

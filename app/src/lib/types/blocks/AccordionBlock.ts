@@ -1,9 +1,13 @@
 export interface AccordionBlock {
-    id: number;
-    items: AccordionItemBlock[];
+    accordion: Accordion;
 }
 
-export interface AccordionItemBlock {
+export interface Accordion {
+    id: number;
+    items: AccordionItem[];
+}
+
+export interface AccordionItem {
     id: number;
     title: string;
     icon: string;

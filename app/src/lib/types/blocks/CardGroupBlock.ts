@@ -1,16 +1,20 @@
 import type { Page } from "../Page";
 
 export interface CardGroupBlock {
+    cardGroup: CardGroup;
+}
+
+export interface CardGroup {
     id: number;
     title: string;
-    cards: CardBlockJunction[];
+    cards: CardJunction[];
 }
 
-export interface CardBlockJunction {
-    card: CardBlock;
+export interface CardJunction {
+    card: Card;
 }
 
-export interface CardBlock {
+export interface Card {
     id: number;
     title: string;
     subTitle: string;

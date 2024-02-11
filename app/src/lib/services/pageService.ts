@@ -3,7 +3,7 @@ import type { Page } from "$lib/types/Page";
 import { createItem, readItem, readItems, updateItem } from "@directus/sdk";
 import { error } from "@sveltejs/kit";
 import { DIRECTUS_URL } from '$env/static/private';
-import type { CardBlock, CardBlockJunction } from "$lib/types/blocks/CardGroupBlock";
+import type { Card, CardJunction } from "$lib/types/blocks/CardGroupBlock";
 import type { Feedback } from "$lib/types/Feedback";
 import { randomUUID } from "crypto";
 
@@ -22,16 +22,21 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                     'editorNodes.item.*',
                     'childPages.titleImage',
                     // LinkBlock
-                    'editorNodes.item.page.slug',
-                    'editorNodes.item.page.icon',
+                    'editorNodes.item.link.*',
+                    'editorNodes.item.link.page.slug',
+                    'editorNodes.item.link.page.icon',
                     // CardGroupBlock
-                    'editorNodes.item.cards.title',
+                    'editorNodes.item.cardGroup.cards.title',
                     //// CardBlock (Junction table)
-                    'editorNodes.item.cards.card.*',
-                    'editorNodes.item.cards.card.page.slug',
-                    'editorNodes.item.cards.card.page.icon',
+                    'editorNodes.item.cardGroup.cards.card.*',
+                    'editorNodes.item.cardGroup.cards.card.page.slug',
+                    'editorNodes.item.cardGroup.cards.card.page.icon',
                     // AccordionBlock
-                    'editorNodes.item.items.*',
+                    'editorNodes.item.accordion.items.*',
+                    // PopupBlock
+                    'editorNodes.item.popup.*',
+                    // SmallTextBlock
+                    'editorNodes.item.smallText.*',
                 ] as any,
                 limit: 1,
             })
@@ -53,8 +58,8 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 
             // Card images
             page.editorNodes?.forEach((editorNode) => {
-                if (editorNode.item?.cards) {
-                    editorNode.item.cards.forEach((junction: CardBlockJunction) => {
+                if (editorNode.item?.cardGroup?.cards) {
+                    editorNode.item.cardGroup.cards.forEach((junction: CardJunction) => {
                         if (junction.card && junction.card.image) {
                             junction.card.imageSrc = buildImageSrc(junction.card.image);
                             page.preloadImages.push(junction.card.imageSrc);

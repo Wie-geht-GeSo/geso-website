@@ -3,22 +3,23 @@
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
 	export let data: AccordionBlock;
+	$: accordion = data?.accordion;
 </script>
 
-{#if data && data.items}
+{#if accordion && accordion.items}
 	<div class="py-3">
 		<Accordion class="card" spacing="space-y-5">
-			{#each data.items as accordionItemBlock}
+			{#each accordion.items as accordionItem}
 				<AccordionItem class="h-full">
 					<svelte:fragment slot="lead">
 						<span class="material-symbols-outlined"
-							>{accordionItemBlock.icon ? accordionItemBlock.icon : 'question_mark'}</span
+							>{accordionItem.icon ? accordionItem.icon : 'question_mark'}</span
 						>
 					</svelte:fragment>
-					<svelte:fragment slot="summary">{accordionItemBlock.title}</svelte:fragment>
+					<svelte:fragment slot="summary">{accordionItem.title}</svelte:fragment>
 					<svelte:fragment slot="content">
 						<div class="dynamic-html">
-							{@html accordionItemBlock.content}
+							{@html accordionItem.content}
 						</div>
 					</svelte:fragment>
 				</AccordionItem>
