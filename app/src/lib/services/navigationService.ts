@@ -16,6 +16,18 @@ async function buildNavigationTree(navigationPages: NavigationPage[]): Promise<N
             root = lookup.get(page.id);
         }
     });
+
+    // Sort the children of each node based on the manualSort property
+    const sortChildren = (node: NavigationPage) => {
+        node.childPages?.sort((a, b) => a.manualSort - b.manualSort);
+        node.childPages?.forEach(sortChildren);
+    };
+
+    // Now sort the entire tree in one go.
+    if (root) {
+        sortChildren(root);
+    }
+
     return root;
 }
 
@@ -30,7 +42,7 @@ export async function fetchAllNavigationPages(): Promise<NavigationPage[]> {
                         { "parentPage": { "_nnull": true } } // All pages with a parent page
                     ]
                 },
-                fields: ['id', 'slug', 'navigationTitle', 'icon', 'parentPage.id'],
+                fields: ['id', 'slug', 'navigationTitle', 'manualSort', 'icon', 'parentPage.id'],
             } as any)
         );
         return pages;
