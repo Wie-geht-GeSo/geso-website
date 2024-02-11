@@ -99,6 +99,20 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 
 }
 
+export async function getPagesForSearch(): Promise<Page[]> {
+    try {
+        const pages = await directusRest.request<Page[]>(
+            readItems('pages', {
+                fields: ['id', 'title', 'slug', 'aiContent'],
+            })
+        );
+
+        return pages;
+    } catch (e) {
+        console.error('Failed to get pages for search:', e);
+        return [];
+    }
+}
 
 async function ratePage(pageId: number, action: "like" | "dislike", previouslyOpposite: boolean): Promise<void> {
     try {
