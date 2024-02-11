@@ -5,6 +5,7 @@ operation="$1"
 backup_name="$2"
 backup_dirs="cms/data/ cms/uploads/"
 backup_base_path="cms/backups/directus_backup_"
+restore_dir="cms/"
 
 # Create the backups directory if it doesn't exist
 mkdir -p cms/backups
@@ -92,7 +93,7 @@ restore)
     fi
 
     # Unzip the backup with automatic overwrite
-    sudo unzip -o "$backup_path" -d .
+    sudo unzip -o "$backup_path" -d "$restore_dir"
     echo 
     echo "Restoration complete from $backup_name."
     ;;
