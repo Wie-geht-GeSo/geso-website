@@ -1,11 +1,12 @@
 import requests
 import weaviate
-import json
-from weaviate.gql.get import HybridFusion
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 client = weaviate.Client(
-    url="http://localhost:8080",  # Replace with your endpoint
+    url=os.getenv("WEAVIATE_URL"),
 )
 
 
@@ -57,13 +58,12 @@ class_obj = {
 
 
 client.schema.delete_class("Page")
-
-
 client.schema.create_class(class_obj)
 
 
+directus_url=os.getenv("DIRECTUS_URL")
 response = requests.get(
-    "http://localhost:8055/items/pages?fields=id,slug,title,aiContent"
+    url=f"{directus_url}/items/pages?fields=id,slug,title,aiContent"
 )
 data = response.json().get("data", [])
 
@@ -71,28 +71,10 @@ data = response.json().get("data", [])
 client.batch.configure(batch_size=100)  # Configure batch
 with client.batch as batch:  # Initialize a batch process
     for i, d in enumerate(data):  # Batch import data
-        print(f"importing page: {i+1}")
+        print(f"importing page: {d['title']}")
         properties = {
             "aiContent": d["aiContent"],
             "slug": d["slug"],
             "title": d["title"],
         }
         batch.add_data_object(data_object=properties, class_name="Page")
-
-
-query = "Jugend"
-response = (
-    client.query.get("Page", ["title", "aiContent", "slug"])
-    # .with_near_tex({"concepts": ["Jugendcoaching"]})
-    .with_hybrid(
-        query=query,
-        fusion_type=HybridFusion.RELATIVE_SCORE, # Needed for autocut with hybrid
-    )
-    # .with_limit(10)
-    .with_additional("score")
-    .with_additional('rerank(property: "aiContent" query: "' + query + '") { score }') # Cohere Reranker with same query
-    .with_autocut(2) # Autocut to only return the top results
-    .do()
-)
-
-print(json.dumps(response, indent=4))

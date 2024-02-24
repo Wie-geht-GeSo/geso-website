@@ -15,7 +15,7 @@ Your digital, smart guide through the health and social care system in Austria.
 * Install Docker Compose
 * Install [bun](https://bun.sh/)
 * `bun install` in app/ to install dependencies
-* Rename `.env.example` to `.env` and fill in your values
+* Rename `.env.example` in each service to `.env` and fill in your values
 
 ## Run
 
@@ -23,6 +23,12 @@ Your digital, smart guide through the health and social care system in Austria.
 `bun run dev` in app: Run sveltekit
 Directus: http://localhost:8055  
 Frontend: http://localhost:5173
+
+### Search 
+Vectorize existing pages for search with weaviate:  
+* `venv -m venv .venv` to create a virtual environment
+* `pip install -r requirements.txt` to install the python dependencies
+* `python3 upsert-data.py` to run the upsert script
 
 ## Backup/Restore Directus
 Run the `cms-util.sh` script and follow instructions

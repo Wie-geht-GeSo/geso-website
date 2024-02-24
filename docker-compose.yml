@@ -78,19 +78,3 @@ services:
 
 volumes:
   weaviate_data:
-
-  # typesense:
-  #   image: typesense/typesense:0.25.2
-  #   restart: on-failure
-  #   ports:
-  #     - "8108:8108"
-  #   volumes:
-  #     - ./typesense-search/typesense-data:/data
-  #   command: '--data-dir /data --api-key=xyz --enable-cors'
-
-  # typesense-dashboard:
-  #   image: ghcr.io/lewynation/typesense-admin-dashboard:latest
-  #   restart: always
-  #   ports:
-  #     - 3005:3000
-
