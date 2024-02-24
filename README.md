@@ -20,7 +20,7 @@ Your digital, smart guide through the health and social care system in Austria.
 ## Run
 
 `docker compose up`: Run directus  
-`bun run dev` in app: Run sveltekit
+`bun run dev` in app: Run sveltekit  
 Directus: http://localhost:8055  
 Frontend: http://localhost:5173
 
