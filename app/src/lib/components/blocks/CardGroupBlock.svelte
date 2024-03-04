@@ -13,7 +13,7 @@
 
 {#if cardGroup && cardGroup.cards && cardGroup?.cards?.every((card) => card)}
 	<div class="flex flex-wrap justify-center gap-10 pt-5">
-		{#each cardGroup.cards as { card } (card?.id)}
+		{#each cardGroup.cards as { card }}
 			{#if card}
 				<div
 					class={`flex flex-col ${
