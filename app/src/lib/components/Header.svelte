@@ -37,7 +37,7 @@
 	};
 </script>
 
-<AppBar shadow="shadow-xl">
+<AppBar shadow="shadow-xl" gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
 	<svelte:fragment slot="lead">
 		<div class="flex items-center">
 			<button class="btn hidden md:block lg:hidden" on:click={drawerOpen}>
@@ -48,10 +48,24 @@
 			</a>
 		</div>
 	</svelte:fragment>
+
+	<!-- Search -->
+	<div class="hidden md:inline md:ml-4">
+		<button
+			class="btn space-x-3 variant-soft-secondary hover:variant-filled-secondary"
+			on:click={triggerSearch}
+			aria-label="Suche"
+		>
+			<span class="material-symbols-outlined">search</span>
+			<small class="hidden md:inline-block font-bold">Suche</small>
+		</button>
+	</div>
+
 	<svelte:fragment slot="trail">
+
 		<!-- Help Popup -->
 		<div class="">
-			<button class="btn btn-sm sm:btn-base hover:variant-soft-primary" use:popup={helpPopup}>
+			<button class="btn btn-sm sm:btn-base hover:variant-filled-primary" use:popup={helpPopup}>
 				<span class="material-symbols-outlined">help_outline</span>
 				<span>Hilfe</span>
 				<span class="material-symbols-outlined">expand_more</span>
@@ -60,16 +74,7 @@
 			<HelpPopupContent />
 		</div>
 
-		<!-- Search -->
-		<div class="hidden md:inline md:ml-4">
-			<button
-				class="btn space-x-4 variant-soft hover:variant-soft-primary"
-				on:click={triggerSearch}
-			>
-				<span class="material-symbols-outlined">search</span>
-				<small class="hidden md:inline-block">Suche</small>
-			</button>
-		</div>
+		
 
 		<ZoomButtons />
 
