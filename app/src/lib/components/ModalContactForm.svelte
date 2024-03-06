@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
+	import { onMount, type SvelteComponent } from 'svelte';
 
 	import { getModalStore, getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { Feedback } from '$lib/types/Feedback';
@@ -26,16 +26,29 @@
 		modalStore.close();
 		toastStore.trigger(contactToast);
 	}
+
+	let subjectInput: HTMLInputElement; 
+
+    onMount(() => {
+        if (subjectInput) {
+            subjectInput.focus(); 
+        }
+    });
 </script>
 
 {#if $modalStore[0]}
 	<div class="card p-4 w-modal shadow-xl space-y-4">
-		<header class="text-2xl font-bold">Kontakt</header>
+		<header class="flex justify-between items-center">
+			<span class="text-2xl font-bold">Kontakt</span>
+			<button type="button" class="btn-icon variant-ringed hover:variant-filled ml-auto" on:click={parent.onClose} aria-label="Close">
+				<span class="material-symbols-outlined">close</span>
+			</button>
+		</header>
 		<article>Senden Sie uns eine Nachricht</article>
 		<form class="modal-form border border-surface-500 p-4 space-y-4 rounded-container-token">
 			<label class="label">
 				<span>Betreff</span>
-				<input class="input" type="text" bind:value={formData.subject} placeholder="Betreff" />
+				<input class="input" type="text" bind:value={formData.subject} bind:this={subjectInput} placeholder="Betreff" />
 			</label>
 			<p>Email (Optional)</p>
 			<div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
@@ -55,8 +68,8 @@
 			</label>
 			<form />
 			<!-- prettier-ignore -->
-			<footer class="modal-footer {parent.regionFooter}">
-			<button class="btn {parent.buttonNeutral} hover:variant-soft-primary" on:click={parent.onClose}>Abbrechen</button>
+			<footer class="modal-footer flex justify-between">
+			<button class="btn variant-ringed hover:variant-filled" on:click={parent.onClose}>Abbrechen</button>
 			<button class="btn variant-outline-primary hover:variant-filled-primary" on:click={onFormSubmit}>Nachricht senden</button>
 		</footer>
 		</form>
