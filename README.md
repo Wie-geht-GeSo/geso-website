@@ -10,6 +10,8 @@ Your digital, smart guide through the health and social care system in Austria.
 * Bun
 * Directus (Headless CMS)
 * Postgres
+* Weaviate (Vector Database)
+* Cohere (Semantic Search Reranking)
 
 ## Setup
 * Install Docker Compose
