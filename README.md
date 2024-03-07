@@ -1,8 +1,8 @@
-# GeSo ![GeSo Logo](/app/static/favicon.png)
+# ![GeSo Logo](/app/static/favicon.png) GeSo
 
 Your digital and smart navigator for the health and social care system in Austria.
 
-## Tech Stack 🔧
+## 🔧 Tech Stack
 
 Here's what powers GeSo:
 
@@ -16,7 +16,7 @@ Here's what powers GeSo:
 - **Weaviate (Vector Database)**: A cloud-native, real-time vector search engine.
 - **Cohere (Semantic Search Reranking)**: AI-powered tools for improving search functionality.
 
-## Setup Instructions 🛠️
+## 🛠️ Setup Instructions
 
 To get GeSo up and running, follow these steps:
 
@@ -25,14 +25,14 @@ To get GeSo up and running, follow these steps:
 3. **Install Dependencies**: Navigate to the app directory (`cd app/`) and run `bun install` to install all necessary dependencies.
 4. **Environment Variables**: Copy `.env.example` to `.env` in each service directory. Be sure to fill in the required values.
 
-## Running the Project 🏃
+## 🏃 Running the Project
 
 - **Start Services**: Use `docker compose up` to initiate and run all services.
 - **Run SvelteKit**: In the `app` directory, execute `bun run dev` to start the SvelteKit application.
 - **Access Directus CMS**: Open http://localhost:8055 in your browser.
 - **View the Frontend**: Visit http://localhost:5173 to see the live application.
 
-### Setting Up Search 🔍
+### 🔍 Setting Up Search
 
 To vectorize and prepare pages for search with Weaviate:
 1. Navigate to the `search` directory.
@@ -40,11 +40,11 @@ To vectorize and prepare pages for search with Weaviate:
 3. Activate the virtual environment and install Python dependencies: `source .venv/bin/activate` followed by `pip install -r requirements.txt`.
 4. Execute `python3 upsert-data.py` to run the script that inserts or updates data in Weaviate.
 
-## Backup and Restore Directus Content 💾
+## 💾 Backup and Restore Directus Content
 
 Utilize the `cms-util.sh` script for backing up or restoring the Directus content. Simply run the script and follow the on-screen instructions.
 
-## Developer Documentation 📚
+## 📚 Developer Documentation
 
 ### Directus CMS Configuration
 
@@ -56,7 +56,7 @@ GeSo uses an extension to allow a flexible mix of rich text and custom blocks wi
 
 To transform the JSON response into HTML and Svelte components, use the `contentTransformationService.ts`.
 
-#### Adding a New Block ➕
+#### ➕ Adding a New Block
 
 1. Refer to the extension's README for guidance on adding a new block type in Directus.
 2. Create a new editor block in Directus, ensuring it has a Many-to-One (M2O) relation with the new block collection. This wrapper block is a necessary workaround for integrating existing blocks directly within the editor.
