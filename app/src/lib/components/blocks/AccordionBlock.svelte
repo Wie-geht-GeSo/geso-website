@@ -16,7 +16,11 @@
 							>{accordionItem.icon ? accordionItem.icon : 'question_mark'}</span
 						>
 					</svelte:fragment>
-					<svelte:fragment slot="summary">{accordionItem.title}</svelte:fragment>
+					<svelte:fragment slot="summary">
+						<span class="font-bold">
+							{accordionItem.title}
+						</span>
+					</svelte:fragment>
 					<svelte:fragment slot="content">
 						<div class="dynamic-html">
 							{@html accordionItem.content}
