@@ -56,7 +56,7 @@ GeSo uses an extension to allow a flexible mix of rich text and custom blocks wi
 
 To transform the JSON response into HTML and Svelte components, use the `contentTransformationService.ts`.
 
-#### ➕ Adding a New Block
+#### Adding a New Block
 
 1. Refer to the extension's README for guidance on adding a new block type in Directus.
 2. Create a new editor block in Directus, ensuring it has a Many-to-One (M2O) relation with the new block collection. This wrapper block is a necessary workaround for integrating existing blocks directly within the editor.
