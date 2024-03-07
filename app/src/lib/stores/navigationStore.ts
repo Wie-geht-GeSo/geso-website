@@ -9,6 +9,8 @@ const currentSlug: Readable<string> = derived(page, $page =>
     $page.url.pathname.split('/').pop() || 'home'
 );
 
+const isHomePage: Readable<boolean> = derived(currentSlug, $currentSlug => $currentSlug === 'home');
+
 const rootMenuItems: Readable<NavigationPage[]> = derived(page, $page => {
     const rootPage = $page.data.navigationTreeRoot as NavigationPage;
     return rootPage ? rootPage.childPages ?? [] : [];
@@ -71,6 +73,7 @@ const currentPageHasParent: Readable<boolean> = derived(
 
 export {
     currentSlug,
+    isHomePage,
     currentNavigationPath,
     currentNavigationPathSlugs,
     rootMenuItems,

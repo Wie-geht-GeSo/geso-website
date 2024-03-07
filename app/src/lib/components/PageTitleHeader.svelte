@@ -2,6 +2,7 @@
 	import { isStandalonePage } from '$lib/utils';
 	import { currentSlug } from '$lib/stores/navigationStore';
 	import { browser } from '$app/environment';
+	import { isHomePage } from '$lib/stores/navigationStore';
 
 	export let scrollToElement: HTMLElement;
 	export let title: string;
@@ -20,7 +21,6 @@
 
 	let noBreadcrumbSlugs = ['home'];
 	$: includeBreadcrumbs = !noBreadcrumbSlugs.includes($currentSlug);
-	$: isHomePage = $currentSlug === 'home';
 </script>
 
 <header
@@ -56,13 +56,13 @@
 		{/if}
 
 		<div class="mt-auto mb-auto">
-			<h1 class="h1 {isHomePage ? 'font-bold' : ''}">
+			<h1 class="h1 {$isHomePage ? 'font-bold' : ''}">
 				<span class="title-gradient">{title}</span>
 			</h1>
 			{#if subTitle}
 				<p class="h4 pt-3">{subTitle}</p>
 			{/if}
-			{#if isHomePage}
+			{#if $isHomePage}
 				<button
 					class="btn variant-outline-primary hover:variant-filled-primary mt-10"
 					on:click={scrollToContent}

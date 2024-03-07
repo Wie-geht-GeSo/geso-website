@@ -12,10 +12,11 @@
 	import Logo from './Logo.svelte';
 	import ZoomButtons from './ZoomButtons.svelte';
 	import HelpPopupContent from './HelpPopupContent.svelte';
+	import { isHomePage } from '$lib/stores/navigationStore';
 
 	const drawerStore = getDrawerStore();
 	const modalStore = getModalStore();
-	
+
 	function drawerOpen(): void {
 		drawerStore.open({});
 	}
@@ -29,7 +30,6 @@
 		modalStore.trigger(modal);
 	}
 
-
 	const helpPopup: PopupSettings = {
 		event: 'click',
 		target: 'help',
@@ -37,7 +37,7 @@
 	};
 </script>
 
-<AppBar shadow="shadow-xl" gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
+<AppBar shadow="shadow-xl">
 	<svelte:fragment slot="lead">
 		<div class="flex items-center">
 			<button class="btn hidden md:block lg:hidden" on:click={drawerOpen}>
@@ -46,22 +46,26 @@
 			<a href="/home" class="flex items-center">
 				<Logo className="ml-3 mr-2" />
 			</a>
+			{#if !$isHomePage}
+				<span class="pl-4 hidden xl:inline-block">
+					{$page?.data?.globals.websiteSlogan}
+				</span>
+			{/if}
 		</div>
 	</svelte:fragment>
 
-	<!-- Search -->
-	<div class="hidden md:inline md:ml-4">
-		<button
-			class="btn space-x-3 variant-soft-secondary hover:variant-filled-secondary"
-			on:click={triggerSearch}
-			aria-label="Suche"
-		>
-			<span class="material-symbols-outlined">search</span>
-			<small class="hidden md:inline-block font-bold">Suche</small>
-		</button>
-	</div>
-
 	<svelte:fragment slot="trail">
+		<!-- Search -->
+		<div class="hidden md:inline md:ml-4">
+			<button
+				class="btn space-x-3 variant-soft-secondary hover:variant-filled-secondary"
+				on:click={triggerSearch}
+				aria-label="Suche"
+			>
+				<span class="material-symbols-outlined">search</span>
+				<small class="hidden md:inline-block font-bold">Suche</small>
+			</button>
+		</div>
 
 		<!-- Help Popup -->
 		<div class="">
@@ -73,8 +77,6 @@
 
 			<HelpPopupContent />
 		</div>
-
-		
 
 		<ZoomButtons />
 
