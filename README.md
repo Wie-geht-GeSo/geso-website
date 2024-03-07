@@ -1,4 +1,4 @@
-# GeSo ![GeSo Logo](/app/src/static/favicon.png)
+# GeSo ![GeSo Logo](/app/static/favicon.png)
 
 Your digital and smart navigator for the health and social care system in Austria.
 
