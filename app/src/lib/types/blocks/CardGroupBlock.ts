@@ -1,3 +1,4 @@
+import type { UUID } from "crypto";
 import type { Page } from "../Page";
 
 export interface CardGroupBlock {
@@ -19,7 +20,7 @@ export interface Card {
     title: string;
     subTitle: string;
     textContent: string;
-    image: string; // UUID of the image
-    imageSrc: string; // Built by pageService
+    image: UUID; 
+    imageSrc: string; // Built by pageService based on UUID
     page: Page;
 }

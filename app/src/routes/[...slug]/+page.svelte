@@ -11,6 +11,7 @@
 	import AccordionBlock from '$lib/components/blocks/AccordionBlock.svelte';
 	import PopupBlock from '$lib/components/blocks/PopupBlock.svelte';
 	import SmallTextBlock from '$lib/components/blocks/SmallTextBlock.svelte';
+	import ImageBlock from '$lib/components/blocks/ImageBlock.svelte';
 	import { page } from '$app/stores';
 	import Rating from '$lib/components/Rating.svelte';
 	import PageTitleHeader from '$lib/components/PageTitleHeader.svelte';
@@ -24,7 +25,8 @@
 		accordion: AccordionBlock,
 		cardGroup: CardGroupBlock,
 		popup: PopupBlock,
-		smallText: SmallTextBlock
+		smallText: SmallTextBlock,
+		image: ImageBlock,
 		// Add other block components as needed
 	};
 	let scrollToElement: HTMLElement;

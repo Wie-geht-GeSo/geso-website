@@ -37,6 +37,8 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                     'editorNodes.item.popup.*',
                     // SmallTextBlock
                     'editorNodes.item.smallText.*',
+                    // ImageBlock
+                    'editorNodes.item.image.*',
                 ] as any,
                 limit: 1,
             })
@@ -44,7 +46,6 @@ export async function getPageBySlug(slug: string): Promise<Page> {
 
         if (pages.length > 0) {
             const page = pages[0];
-
             function buildImageSrc(image: string): string {
                 return `${DIRECTUS_URL}/assets/${image}`;
             }
@@ -56,8 +57,9 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                 page.preloadImages.push(page.titleImageSrc);
             }
 
-            // Card images
+            // EditorNodes Image
             page.editorNodes?.forEach((editorNode) => {
+                // Cards
                 if (editorNode.item?.cardGroup?.cards) {
                     editorNode.item.cardGroup.cards.forEach((junction: CardJunction) => {
                         if (junction.card && junction.card.image) {
@@ -65,6 +67,11 @@ export async function getPageBySlug(slug: string): Promise<Page> {
                             page.preloadImages.push(junction.card.imageSrc);
                         }
                     });
+                }
+                // Content Image
+                if (editorNode.item?.image?.image) {
+                    editorNode.item.image.imageSrc = buildImageSrc(editorNode.item.image.image);
+                    page.preloadImages.push(editorNode.item.image.imageSrc);
                 }
             });
 

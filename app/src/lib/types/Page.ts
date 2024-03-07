@@ -7,8 +7,8 @@ export interface Page {
     id: number;
 	title: string;
     subTitle: string;
-    titleImage: UUID; // UUID of the image
-    titleImageSrc: string;  // Built by pageService
+    titleImage: UUID;
+    titleImageSrc: string;  // Fetched by pageService based on UUID
     preloadImages: string[];
     navigationTitle: string;
     slug: string;
