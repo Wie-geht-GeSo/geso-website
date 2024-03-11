@@ -15,12 +15,9 @@
 	<div class="flex flex-wrap justify-center gap-10 pt-5">
 		{#each cardGroup.cards as { card }}
 			{#if card}
-				<div
-					class={`flex flex-col ${
-						cardGroup.cards.length <= 3 ? ' sm:w-1/2 md:w-1/4' : 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5'
-					} card text-center bg-surface-200-700-token card-hover hover:variant-filled-primary overflow-hidden`}
+				<a href={card.page?.slug} class={`flex flex-col ${cardGroup.cards.length <= 3 ? ' sm:w-1/2 md:w-1/4' : 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5'} 
+				card text-center bg-surface-200-700-token card-hover hover:variant-filled-primary overflow-hidden flex flex-col h-full justify-between`}
 				>
-					<a href={card.page?.slug} class="flex flex-col h-full justify-between">
 						<header>
 							{#if card.image}
 								<div class="overflow-hidden max-h-60">
@@ -33,8 +30,7 @@
 						<section class="py-4 px-1">
 							<h1 class="h4 text-center">{card.title}</h1>
 						</section>
-					</a>
-				</div>
+				</a>
 			{/if}
 		{/each}
 	</div>
