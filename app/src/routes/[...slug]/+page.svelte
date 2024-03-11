@@ -55,6 +55,7 @@
 				title={data.page.title}
 				subTitle={data.page.subTitle}
 				titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}
+				altTitleImage={data.page.titleImage ? data.page.altTitleImage : ""}
 			/>
 		</div>
 		<!-- Use invisible ToC to align title header correctly with content below -->

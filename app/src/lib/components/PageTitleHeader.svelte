@@ -8,6 +8,7 @@
 	export let title: string;
 	export let subTitle: string | null;
 	export let titleImageSrc: string | null;
+	export let altTitleImage: string | null;
 
 	function goBack() {
 		history.back();
@@ -77,7 +78,7 @@
 	{#if titleImageSrc}
 		<img
 			src={titleImageSrc}
-			alt="Titelbild"
+			alt={altTitleImage}
 			class="hidden sm:block sm:h-56 lg:h-96 max-h-96 object-cover"
 		/>
 	{/if}
