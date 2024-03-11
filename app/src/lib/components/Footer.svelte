@@ -82,7 +82,7 @@
 			<p class="!text-sm opacity-80">
 				Entwickelt von <a
 					class="anchor"
-					href="https://github.com/JohannesPertl/"
+					href="https://www.linkedin.com/in/johannes-pertl-54b74b190/"
 					target="_blank"
 					rel="noreferrer">Johannes Pertl</a
 				>
