@@ -21,7 +21,7 @@
 						<header>
 							{#if card.image}
 								<div class="overflow-hidden max-h-60">
-									<img src={card.imageSrc} class="w-full object-cover object-top" alt="Post" />
+									<img src={card.imageSrc} class="w-full object-cover object-top" alt={card.title} />
 								</div>
 							{:else}
 								<span class="material-symbols-outlined !text-4xl pt-6">{card.page?.icon || "article"} </span>
