@@ -1,6 +1,10 @@
 #!/bin/bash
 # This script is used to backup and restore the Directus data directory.
 
+# Exit on error
+set -e
+set -o pipefail
+
 operation="$1"
 backup_name="$2"
 backup_dirs="cms/data/ cms/uploads/"
