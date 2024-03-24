@@ -5,6 +5,7 @@ node_modules/
 build
 .svelte-kit/
 package/
+.envrc
 .env
 .env.*
 !.env.example

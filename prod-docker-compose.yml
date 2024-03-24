@@ -1,0 +1,85 @@
+services:
+  database:
+    image: postgres:13
+    volumes:
+      - ./cms/data/database:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "directus"
+
+  cache:
+    image: redis:7
+
+  directus:
+    build: ./cms
+    ports:
+      - 127.0.0.1:8055:8055
+    volumes:
+      - ./cms/uploads:/directus/uploads
+    depends_on:
+      - cache
+      - database
+    environment:
+      KEY: "255d861b-5ea1-5996-9aa3-922530ec40b1"
+      SECRET: "6116487b-cda1-52c2-b5b5-c8022c45e263"
+
+      DB_CLIENT: "pg"
+      DB_HOST: "database"
+      DB_PORT: "5432"
+      DB_DATABASE: "directus"
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+
+      CACHE_ENABLED: "true" # Set to 'true' in production
+      CACHE_STORE: "redis"
+      REDIS: "redis://cache:6379"
+
+      ADMIN_EMAIL: "${DIRECTUS_ADMIN}"
+      ADMIN_PASSWORD: "${DIRECTUS_PASSWORD}"
+
+      PUBLIC_URL: "${DIRECTUS_URL}"
+
+  weaviate:
+    command:
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8080"
+      - --scheme
+      - http
+    image: semitechnologies/weaviate:1.23.7
+    ports:
+      - 127.0.0.1:8080:8080
+      - 127.0.0.1:50051:50051
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    restart: on-failure:0
+    environment:
+      TRANSFORMERS_INFERENCE_API: "http://t2v-transformers:8080"
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      DEFAULT_VECTORIZER_MODULE: "text2vec-transformers"
+      ENABLE_MODULES: "text2vec-transformers,reranker-cohere"
+      COHERE_APIKEY: "${COHERE_API_KEY}"
+      CLUSTER_HOSTNAME: "node1"
+      LIMIT_RESOURCES: true
+  t2v-transformers:
+    image: semitechnologies/transformers-inference:sentence-transformers-paraphrase-multilingual-mpnet-base-v2
+    environment:
+      ENABLE_CUDA: "0"
+
+  frontend:
+    build: ./app
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      - cache
+      - database
+      - directus
+
+volumes:
+  weaviate_data:
