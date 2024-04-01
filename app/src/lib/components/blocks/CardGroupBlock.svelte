@@ -16,7 +16,7 @@
 		{#each cardGroup.cards as { card }}
 			{#if card}
 				<a href={card.page?.slug} class={`flex flex-col ${cardGroup.cards.length <= 3 ? ' sm:w-1/2 md:w-1/4' : 'sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5'} 
-				card text-center bg-surface-200-700-token card-hover hover:variant-filled-primary overflow-hidden flex flex-col h-full justify-between`}
+				card text-center bg-surface-200-700-token card-hover sm:hover:variant-filled-primary overflow-hidden flex flex-col h-full justify-between`}
 				>
 						<header>
 							{#if card.image}
