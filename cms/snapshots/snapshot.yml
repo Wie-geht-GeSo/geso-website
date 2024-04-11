@@ -3570,7 +3570,7 @@ fields:
       display_options: null
       field: id
       group: null
-      hidden: false
+      hidden: true
       interface: input
       note: null
       options: null
@@ -3609,7 +3609,7 @@ fields:
       display_options: null
       field: item
       group: null
-      hidden: false
+      hidden: true
       interface: null
       note: null
       options: null
@@ -3647,7 +3647,7 @@ fields:
       display_options: null
       field: collection
       group: null
-      hidden: false
+      hidden: true
       interface: null
       note: null
       options: null
@@ -3685,7 +3685,7 @@ fields:
       display_options: null
       field: pages_id
       group: null
-      hidden: false
+      hidden: true
       interface: null
       note: null
       options: null
