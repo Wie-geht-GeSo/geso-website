@@ -19,6 +19,7 @@ services:
       - 8055:8055
     volumes:
       - ./cms/uploads:/directus/uploads
+      - ./cms/snapshots:/directus/snapshots
       # If you want to load extensions from the host
       # - ./extensions:/directus/extensions
     depends_on:

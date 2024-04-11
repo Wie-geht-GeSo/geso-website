@@ -24,6 +24,7 @@ To get GeSo up and running, follow these steps:
 2. **Install Bun**: Visit [Bun's official site](https://bun.sh/) for installation instructions.
 3. **Install Dependencies**: Navigate to the app directory (`cd app/`) and run `bun install` to install all necessary dependencies.
 4. **Environment Variables**: Copy `.env.example` to `.env` in each service directory. Be sure to fill in the required values.
+5. **Initialize Directus schema**: Run `docker compose exec directus npx directus schema apply /directus/snapshots/snapshot.yaml` to apply the Directus schema.
 
 ## 🏃 Running the Project
 
@@ -40,15 +41,17 @@ To vectorize and prepare pages for search with Weaviate:
 3. Activate the virtual environment and install Python dependencies: `source .venv/bin/activate` followed by `pip install -r requirements.txt`.
 4. Execute `python3 upsert-data.py` to run the script that inserts or updates data in Weaviate.
 
-## 💾 Backup and Restore Directus Content
-
-Utilize the `cms-util.sh` script for backing up or restoring the Directus content. Simply run the script and follow the on-screen instructions.
 
 ## 📚 Developer Documentation
 
-### Directus CMS Configuration
+### Directus CMS
 
 Ensure there is at least one page with the slug `home`. This serves as the landing page for the application.
+
+#### Backup and Restore Directus Content
+
+Utilize the `cms-util.sh` script for backing up or restoring the whole Directus content. Simply run the script and follow the on-screen instructions.
+**Note**: Use only for development. Apply proper migrations in production: https://docs.directus.io/self-hosted/cli.html
 
 ### Dynamically Rendering Content
 
