@@ -4,4 +4,4 @@ USER root
 RUN corepack enable
 USER node
 
-RUN pnpm add directus-extension-flexible-editor@1.4.0
+RUN pnpm add directus-extension-flexible-editor@1.4.1
