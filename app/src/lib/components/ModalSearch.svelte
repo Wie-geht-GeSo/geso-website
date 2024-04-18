@@ -55,13 +55,13 @@
 				on:keydown={onKeyDown}
 			/>
 			{#if searchLoading}
-				<button class="variant-filled-secondary" disabled>
+				<button class="variant-filled-secondary sm:w-32 flex !justify-center" disabled>
 					<ProgressRadial width="w-9" />
 				</button>
 			{:else}
-				<button class="variant-filled-secondary" on:click={search}>
-					<span class="material-symbols-outlined !text-3xl">search</span>
-					<span class="pl-1 font-bold">Suchen</span>
+				<button class="variant-filled-secondary sm:w-32" on:click={search}>
+					<span class="material-symbols-outlined !text-4xl sm:!text-3xl">search</span>
+					<span class="hidden sm:inline pl-1 font-bold">Suchen</span>
 				</button>
 			{/if}
 		</div>
