@@ -12,7 +12,6 @@
 	export let altTitleImage: string | null;
 	export let captionTitleImage: string | null;
 
-	const modalStore = getModalStore();
 	function goBack() {
 		history.back();
 	}
@@ -21,15 +20,6 @@
 		if (browser && scrollToElement) {
 			scrollToElement.scrollIntoView({ behavior: 'smooth' });
 		}
-	}
-
-	function triggerSearch(): void {
-		const modal: ModalSettings = {
-			type: 'component',
-			component: 'modalSearch',
-			position: 'item-start'
-		};
-		modalStore.trigger(modal);
 	}
 
 	let noBreadcrumbSlugs = ['home'];
@@ -71,12 +61,11 @@
 			{/if}
 			{#if $isHomePage}
 				<button
-					class="btn btn-lg space-x-3 variant-outline-secondary hover:variant-filled-secondary mt-10"
-					on:click={triggerSearch}
-					aria-label="Suche"
+					class="btn variant-outline-secondary hover:variant-filled-secondary mt-10"
+					on:click={scrollToContent}
 				>
-					<span class="material-symbols-outlined">search</span>
-					<small class="font-bold">Suche</small>
+					<span>Start</span>
+					<span class="material-symbols-outlined">expand_more</span>
 				</button>
 			{/if}
 		</div>
