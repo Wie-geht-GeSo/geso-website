@@ -28,7 +28,10 @@
 							{/if}
 						</header>
 						<section class="py-4 px-1">
-							<h1 class="h4 text-center">{card.title}</h1>
+							<h1 class="h4 text-center font-bold">{card.title}</h1>
+							{#if card.content}
+								<p class="pt-2">{card.content}</p>
+							{/if}
 						</section>
 				</a>
 			{/if}
