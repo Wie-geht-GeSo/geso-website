@@ -3,7 +3,7 @@
 	import { currentSlug } from '$lib/stores/navigationStore';
 	import { browser } from '$app/environment';
 	import { isHomePage } from '$lib/stores/navigationStore';
-	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { page } from '$app/stores';
 
 	export let scrollToElement: HTMLElement;
 	export let title: string;
@@ -64,7 +64,7 @@
 					class="btn variant-outline-secondary hover:variant-filled-secondary mt-10"
 					on:click={scrollToContent}
 				>
-					<span>Start</span>
+					<span>{$page?.data?.globals?.startButtonText || "Zur Auswahl"}</span>
 					<span class="material-symbols-outlined">expand_more</span>
 				</button>
 			{/if}

@@ -11,6 +11,7 @@ const client: WeaviateClient = weaviate.client({
 interface SearchPage {
     title: string;
     slug: string;
+    subTitle: string;
 }
 
 export async function GET({ url }) {
@@ -22,7 +23,7 @@ export async function GET({ url }) {
     const searchResult = await client.graphql
         .get()
         .withClassName('Page')
-        .withFields(`slug title aiContent _additional {score explainScore distance rerank(property: "aiContent" query: "${query}") { score } }`)
+        .withFields(`aiContent title subTitle slug _additional {score explainScore distance rerank(property: "aiContent" query: "${query}") { score } }`)
         .withHybrid({ query: query, fusionType: FusionType.relativeScoreFusion }) // TODO: Adapt alpha
         .withAutocut(2) // Autocut to only return the top results TODO: Experiment with this
         .do();
@@ -30,6 +31,7 @@ export async function GET({ url }) {
     const parsedResult: SearchPage[] = searchResult.data.Get.Page.map((page: SearchPage) => ({
         title: page.title,
         slug: page.slug,
+        subTitle: page.subTitle
     }));
 
     return json(parsedResult);

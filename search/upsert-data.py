@@ -21,12 +21,24 @@ class_obj = {
             "dataType": ["text"],
             "description": "The title",
             "moduleConfig": {
-                "text2vec-transformers": {"skip": True, "vectorizePropertyName": False},
+                "text2vec-transformers": {"skip": False, "vectorizePropertyName": False},
                 "reranker-cohere": {
                     "model": "rerank-multilingual-v2.0",
                 },
             },
             "name": "title",
+            "tokenization": "lowercase",
+        },
+        {
+            "dataType": ["text"],
+            "description": "The subtitle",
+            "moduleConfig": {
+                "text2vec-transformers": {"skip": False, "vectorizePropertyName": False},
+                "reranker-cohere": {
+                    "model": "rerank-multilingual-v2.0",
+                },
+            },
+            "name": "subTitle",
             "tokenization": "lowercase",
         },
         {
@@ -63,7 +75,7 @@ client.schema.create_class(class_obj)
 
 directus_url=os.getenv("DIRECTUS_URL")
 response = requests.get(
-    url=f"{directus_url}/items/pages?fields=id,slug,title,aiContent"
+    url=f"{directus_url}/items/pages?fields=id,slug,title,subTitle,aiContent"
 )
 data = response.json().get("data", [])
 
@@ -76,5 +88,6 @@ with client.batch as batch:  # Initialize a batch process
             "aiContent": d["aiContent"],
             "slug": d["slug"],
             "title": d["title"],
+            "subTitle": d["subTitle"],
         }
         batch.add_data_object(data_object=properties, class_name="Page")
