@@ -9,7 +9,7 @@
 	const cResultAnchor =
 		'!rounded-none justify-between hover:variant-soft focus:!variant-filled-primary outline-0';
 	const cFooter =
-		'hidden md:flex items-center gap-2 bg-surface-300-600-token p-4 text-xs font-bold';
+		'hidden md:flex items-center gap-2 p-4 text-xs font-bold justify-center';
 
 	let searchTerm = '';
 	let results: any = '';
@@ -17,7 +17,7 @@
 	let searchPerformed = false;
 	let searchLoading = false;
 	const searchDescription =
-		'Fragen Sie unseren AI Assistenten um relevante Informationen zu finden.';
+		'🤖 Unsere intelligente Suche denkt mit – probieren Sie einzelne Begriffe, ganze Sätze oder Fragen aus.';
 
 	async function search(): Promise<void> {
 		if (!searchTerm.trim()) return;
@@ -55,12 +55,13 @@
 				on:keydown={onKeyDown}
 			/>
 			{#if searchLoading}
-				<button class="variant-filled-secondary" disabled>
+				<button class="variant-filled-secondary sm:w-32 flex !justify-center" disabled>
 					<ProgressRadial width="w-9" />
 				</button>
 			{:else}
-				<button class="variant-filled-secondary" on:click={search}>
-					<span class="material-symbols-outlined !text-4xl">search</span>
+				<button class="variant-filled-secondary sm:w-32" on:click={search}>
+					<span class="material-symbols-outlined !text-4xl sm:!text-3xl">search</span>
+					<span class="hidden sm:inline pl-1 font-bold">Suchen</span>
 				</button>
 			{/if}
 		</div>
@@ -76,7 +77,7 @@
 								<i class="fa-regular fa-file" />
 								<span class="flex-auto font-bold opacity-75">{result.title}</span>
 							</div>
-							<span class="hidden md:block text-xs opacity-50">/{result.slug}</span>
+							<span class="hidden md:block text-xs opacity-50">{result.subTitle || ""}</span>
 						</a>
 					</li>
 				{/each}
@@ -96,10 +97,4 @@
 			</p>
 		</div>
 	{/if}
-	<!-- Footer -->
-	<footer class="modal-search-footer {cFooter}">
-		<div><kbd class="kbd">Esc</kbd> Schließen</div>
-		<div><kbd class="kbd">Tab</kbd> Navigieren</div>
-		<div><kbd class="kbd">Enter</kbd> Auswählen</div>
-	</footer>
 </div>

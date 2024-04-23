@@ -18,10 +18,11 @@
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-5 md:space-y-0';
 	const cRowTwo =
 		'flex flex-col md:flex-row justify-between items-center md:items-start space-y-4 md:space-y-0';
+
 </script>
 
 <div class="page-footer {cBase}">
-	<div class="w-full max-w-7xl mx-auto p-4 py-5 space-y-10">
+	<div class="w-full max-w-7xl mx-auto p-4 py-5 space-y-5">
 		<!-- Row 1 -->
 		<section class={cRowOne}>
 			<div
@@ -66,21 +67,19 @@
 
 		<!-- Row 2 -->
 		<section class={cRowTwo}>
-			<p>
-				{#if $page?.data?.footer?.bottomLinks}
-					{#each $page.data.footer.bottomLinks as bottomLink, index}
-						<a class="anchor" target="_blank" rel="noreferrer" href={bottomLink.url}>
-							{bottomLink.name || bottomLink.url}
-						</a>
-						{#if index < $page.data.footer.bottomLinks.length - 1}
-							<span class="opacity-10 mx-2">|</span>
-						{/if}
-					{/each}
-				{/if}
+			<p class="!text-xs opacity-80">
+				Inhalt: <a
+					class="anchor"
+					href="https://sophi.at"
+					target="_blank"
+					rel="noreferrer">sophi</a
+				>
 			</p>
-			<p class="!text-sm opacity-80">{versionInfo}</p>
-			<p class="!text-sm opacity-80">
-				Entwickelt von <a
+			{#if $page?.data?.footer?.showVersion}
+				<p class="!text-xs opacity-80">{versionInfo}</p>
+			{/if}
+			<p class="!text-xs opacity-80">
+				Webentwicklung: <a
 					class="anchor"
 					href="https://www.linkedin.com/in/johannes-pertl-54b74b190/"
 					target="_blank"

@@ -18,8 +18,7 @@ export interface CardJunction {
 export interface Card {
     id: number;
     title: string;
-    subTitle: string;
-    textContent: string;
+    content: string;
     image: UUID; 
     imageSrc: string; // Built by pageService based on UUID
     page: Page;

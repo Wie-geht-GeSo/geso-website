@@ -27,7 +27,6 @@ export const load: LayoutServerLoad = (async () => {
         footer = await directusRest.request<Footer>(readSingleton('footer', {
             fields: [
                 '*',
-                'bottomLinks.*',
                 'blocks.*',
                 'blocks.item.*',
                 'blocks.item.links.*',
