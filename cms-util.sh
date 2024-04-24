@@ -96,7 +96,7 @@ restore)
     fi
 
     # Unzip the backup with automatic overwrite
-    sudo unzip -o "$backup_path" -d cms/
+    sudo unzip -o "$backup_path" -d .
     echo 
     echo "Restoration complete from $backup_name."
     ;;
