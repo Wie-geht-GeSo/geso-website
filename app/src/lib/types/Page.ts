@@ -17,6 +17,7 @@ export interface Page {
     blocks: Block[];
     icon: string;
     content?: JSONContent; // Only used in the cms editor
+    tags: string[]; 
     aiContent?: string; // Content for the AI search
     transformedContent?: TransformedContentSection[]; // HTML and components for rendering
     editorNodes: any[];   

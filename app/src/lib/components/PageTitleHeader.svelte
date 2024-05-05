@@ -4,10 +4,12 @@
 	import { browser } from '$app/environment';
 	import { isHomePage } from '$lib/stores/navigationStore';
 	import { page } from '$app/stores';
+	import Tags from './Tags.svelte';
 
 	export let scrollToElement: HTMLElement;
 	export let title: string;
 	export let subTitle: string | null;
+	export let tags: string[] | undefined;
 	export let titleImageSrc: string | null;
 	export let altTitleImage: string | null;
 	export let captionTitleImage: string | null;
@@ -59,12 +61,15 @@
 			{#if subTitle}
 				<p class="h4 pt-3">{subTitle}</p>
 			{/if}
+			{#if tags}
+				<Tags {tags} />
+			{/if}
 			{#if $isHomePage}
 				<button
 					class="btn variant-outline-secondary hover:variant-filled-secondary mt-10"
 					on:click={scrollToContent}
 				>
-					<span>{$page?.data?.globals?.startButtonText || "Zur Auswahl"}</span>
+					<span>{$page?.data?.globals?.startButtonText || 'Zur Auswahl'}</span>
 					<span class="material-symbols-outlined">expand_more</span>
 				</button>
 			{/if}

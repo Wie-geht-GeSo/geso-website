@@ -26,7 +26,7 @@
 		cardGroup: CardGroupBlock,
 		popup: PopupBlock,
 		smallText: SmallTextBlock,
-		image: ImageBlock,
+		image: ImageBlock
 		// Add other block components as needed
 	};
 	let scrollToElement: HTMLElement;
@@ -53,10 +53,11 @@
 			<PageTitleHeader
 				{scrollToElement}
 				title={data.page.title}
+				tags={data.page.tags}
 				subTitle={data.page.subTitle}
 				titleImageSrc={data.page.titleImage ? data.page.titleImageSrc : null}
-				altTitleImage={data.page.titleImage ? data.page.altTitleImage : ""}
-				captionTitleImage={data.page.titleImage ? data.page.captionTitleImage : ""}
+				altTitleImage={data.page.titleImage ? data.page.altTitleImage : ''}
+				captionTitleImage={data.page.titleImage ? data.page.captionTitleImage : ''}
 			/>
 		</div>
 		<!-- Use invisible ToC to align title header correctly with content below -->

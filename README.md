@@ -10,6 +10,7 @@ Here's what powers GeSo:
 - **TailwindCSS**: A utility-first CSS framework for rapid UI development.
 - **Skeleton (UI Toolkit)**: A simple, responsive boilerplate to kickstart any project.
 - **Docker Compose**: A tool for defining and running multi-container Docker applications.
+- **Bun**: A fast all-in-one JavaScript runtime.
 - **Directus (Headless CMS)**: An open-source headless CMS for managing content and making it accessible through a RESTful API.
 - **Postgres**: A powerful, open-source object-relational database system.
 - **Weaviate (Vector Database)**: A cloud-native, real-time vector search engine.
@@ -25,11 +26,11 @@ To get GeSo up and running, follow these steps:
 4. **Environment Variables**: Copy `.env.example` to `.env` in each service directory. Be sure to fill in the required values.
 5. **Initialize Directus schema**: Run `docker compose exec directus npx directus schema apply /directus/snapshots/snapshot.yaml` to apply the Directus schema.
 
-## 🏃 Running the Project
+## 🏃 Running the Project locally
 
-- **Start Services**: Use `make run-local` to build and run all necessary docker containers.
+- **Start Services**: Use `make run-local` to build and run all necessary docker containers and run the frontend with bun.
 - **Access Directus CMS**: Open http://localhost:8055 in your browser.
-- **View the Frontend**: Visit http://localhost:3000 to see the live application.
+- **View the Frontend**: Visit http://localhost:5173 to see the live application.
 
 ### 🔍 Setting Up Search
 

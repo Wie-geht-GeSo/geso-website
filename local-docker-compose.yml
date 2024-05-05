@@ -10,9 +10,6 @@ services:
       POSTGRES_PASSWORD: "directus"
       POSTGRES_DB: "directus"
 
-  cache:
-    image: redis:7
-
   directus:
     build: ./cms
     ports:
@@ -23,7 +20,6 @@ services:
       # If you want to load extensions from the host
       # - ./extensions:/directus/extensions
     depends_on:
-      - cache
       - database
     environment:
       KEY: "255d861b-5ea1-5996-9aa3-922530ec40b1"
@@ -35,10 +31,6 @@ services:
       DB_DATABASE: "directus"
       DB_USER: "directus"
       DB_PASSWORD: "directus"
-
-      CACHE_ENABLED: "true" # Set to 'true' in production
-      CACHE_STORE: "redis"
-      REDIS: "redis://cache:6379"
 
       ADMIN_EMAIL: "admin@example.com"
       ADMIN_PASSWORD: "directus"
