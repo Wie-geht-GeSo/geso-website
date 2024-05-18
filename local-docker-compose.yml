@@ -32,8 +32,8 @@ services:
       DB_USER: "directus"
       DB_PASSWORD: "directus"
 
-      ADMIN_EMAIL: "admin@example.com"
-      ADMIN_PASSWORD: "directus"
+      #ADMIN_EMAIL: "admin@example.com"
+      #ADMIN_PASSWORD: "directus"
 
       # Make sure to set this in production
       # (see https://docs.directus.io/self-hosted/config-options#general)

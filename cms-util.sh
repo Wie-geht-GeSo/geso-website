@@ -6,12 +6,22 @@ set -e
 set -o pipefail
 
 operation="$1"
-backup_name="$2"
-backup_dirs="cms/data/ cms/uploads/"
+backup_name="$3"
+environment="$2"
+backup_dirs="cms/snapshots/ cms/uploads/ cms/db_dumps/"
 backup_base_path="cms/backups/directus_backup_"
 
 # Create the backups directory if it doesn't exist
 mkdir -p cms/backups
+
+if [ "$environment" == "prod" ]; then
+    COMPOSE_FILE="prod-docker-compose.yml"
+elif [ "$environment" == "local" ]; then
+    COMPOSE_FILE="local-docker-compose.yml"
+else
+    echo "Invalid argument. Please specify either 'prod' or 'local'."
+    exit 1
+fi
 
 declare -A backup_map # Declare an associative array
 

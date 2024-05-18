@@ -29,6 +29,14 @@ run-local:
 run-prod: rebuild-frontend
 	docker compose -f prod-docker-compose.yml up -d
 
+create-backup:
+	docker compose -f local-docker-compose.yml exec directus npx directus schema snapshot --yes /directus/snapshots/snapshot.yaml
+	docker compose -f local-docker-compose.yml exec database pg_dump -a --inserts -U $(DB_USER) -F t directus > cms/db_dumps/directus_$(shell date +%Y%m%d%H%M).tar
+
+restore-backup:
+	docker compose -f local-docker-compose.yml exec directus npx directus schema apply /directus/snapshots/snapshot.yaml
+	docker compose -f local-docker-compose.yml exec -T database pg_restore --disable-triggers -U $(DB_USER) -d directus -F t < cms/db_dumps/directus_202405051803.tar
+
 stop:
 	docker stop geso_front || true
 	docker compose -f local-docker-compose.yml down
