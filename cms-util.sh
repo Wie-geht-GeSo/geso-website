@@ -6,22 +6,14 @@ set -e
 set -o pipefail
 
 operation="$1"
-backup_name="$3"
 environment="$2"
-backup_dirs="cms/snapshots/ cms/uploads/ cms/db_dumps/"
+backup_name="$3"
+backup_dirs="cms/snapshots/ cms/uploads/"
+dumps="cms/db_dumps"
 backup_base_path="cms/backups/directus_backup_"
 
 # Create the backups directory if it doesn't exist
 mkdir -p cms/backups
-
-if [ "$environment" == "prod" ]; then
-    COMPOSE_FILE="prod-docker-compose.yml"
-elif [ "$environment" == "local" ]; then
-    COMPOSE_FILE="local-docker-compose.yml"
-else
-    echo "Invalid argument. Please specify either 'prod' or 'local'."
-    exit 1
-fi
 
 declare -A backup_map # Declare an associative array
 
@@ -51,8 +43,8 @@ function check_backup_exists {
 
 case "$operation" in
 backup)
-    if [ -z "$backup_name" ]; then
-        echo "Usage: $0 backup <name>"
+    if [ -z "$environment" ] || [ -z "$backup_name" ]; then
+        echo "Usage: $0 backup <env-docker-compose.yaml> <name>"
         exit 1
     fi
 
@@ -72,15 +64,20 @@ backup)
         fi
     fi
 
+    # Create pg dumps
+    docker compose -f $environment exec -u root directus chown -R node:node /directus/database /directus/extensions /directus/uploads /directus/snapshots
+	docker compose -f $environment exec directus npx directus schema snapshot --yes /directus/snapshots/snapshot.yaml
+	docker compose -f $environment exec database pg_dump -a --inserts -U $DB_USER -F t -T directus_users directus > cms/db_dumps/directus_$backup_name.tar
+
     # Create a backup
-    sudo zip -r "$backup_path" $backup_dirs
+    sudo zip -r "$backup_path" $backup_dirs $dumps/directus_$backup_name.tar
     echo "Backup created for $backup_dirs with name $backup_name"
     ;;
 
 
 restore)
-    if [ -z "$backup_name" ]; then
-        echo "Usage: $0 restore <name|number>"
+    if [ -z "$environment" ] || [ -z "$backup_name" ]; then
+        echo "Usage: $0 restore <env-docker-compose.yaml> <name|number>"
         list_available_backups
         exit 1
     fi
@@ -107,6 +104,11 @@ restore)
 
     # Unzip the backup with automatic overwrite
     sudo unzip -o "$backup_path" -d .
+
+	docker compose -f $environment exec directus npx directus schema apply /directus/snapshots/snapshot.yaml
+	docker compose -f $environment exec -T database pg_restore --disable-triggers -U $DB_USER -d directus -F t < cms/db_dumps/directus_$backup_name.tar
+    docker compose -f $environment exec -u root directus chown -R node:node /directus/database /directus/extensions /directus/uploads /directus/snapshots
+
     echo 
     echo "Restoration complete from $backup_name."
     ;;
@@ -132,7 +134,7 @@ rm)
     ;;
 *)
     echo "Invalid operation. Available operations: backup, restore, list, rm."
-    echo "Usage: $0 <operation> <backup_name>"
+    echo "Usage: $0 <operation> <env-docker-compose.yaml> <backup_name>"
     list_available_backups
     exit 1
     ;;

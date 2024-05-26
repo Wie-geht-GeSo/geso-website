@@ -1,7 +1,5 @@
 import requests
 import weaviate
-import subprocess
-import time
 import os
 from dotenv import load_dotenv
 
@@ -81,9 +79,8 @@ response = requests.get(
 )
 data = response.json().get("data", [])
 
-subprocess.run(["docker", "stop", "geso-website-directus-1"]) #free up resources for weaviate on weaker servers
-time.sleep(30)
-client.batch.configure(batch_size=5)  # Configure batch, keep small for weaker servers
+
+client.batch.configure(batch_size=100)  # Configure batch
 with client.batch as batch:  # Initialize a batch process
     for i, d in enumerate(data):  # Batch import data
         print(f"importing page: {d['title']}")
@@ -94,5 +91,3 @@ with client.batch as batch:  # Initialize a batch process
             "subTitle": d["subTitle"],
         }
         batch.add_data_object(data_object=properties, class_name="Page")
-time.sleep(30)
-subprocess.run(["docker", "start", "geso-website-directus-1"])
