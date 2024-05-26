@@ -32,6 +32,11 @@ To get GeSo up and running, follow these steps:
 - **Access Directus CMS**: Open http://localhost:8055 in your browser.
 - **View the Frontend**: Visit http://localhost:5173 to see the live application.
 
+To access the **Directus** cms on http://localhost:8055 use the default credentials:
+
+- User: admin@example.com
+- Password: directus
+
 ### 🔍 Setting Up Search
 
 To vectorize and prepare pages for search with Weaviate:
@@ -42,7 +47,6 @@ To vectorize and prepare pages for search with Weaviate:
 4. Execute `python3 upsert-data.py` to run the script that inserts or updates data in Weaviate.
 5. (Optional): Use the provided make target `make init-search` to perform the above mentioned steps in one go.
 
-
 ## 📚 Developer Documentation
 
 ### Directus CMS
@@ -52,7 +56,7 @@ Ensure there is at least one page with the slug `home`. This serves as the landi
 #### Backup and Restore Directus Content
 
 Utilize the `cms-util.sh` script for backing up or restoring the whole Directus content. Simply run the script and follow the on-screen instructions.
-**Note**: Use only for development. Apply proper migrations in production: https://docs.directus.io/self-hosted/cli.html
+This will create an initial state of the CMS with the GeSo content preloaded.
 
 ### Dynamically Rendering Content
 
