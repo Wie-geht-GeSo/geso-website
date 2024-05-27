@@ -24,6 +24,8 @@ Here's what powers GeSo:
 - **Weaviate (Vector Database)**: A cloud-native, real-time vector search engine.
 - **Cohere (Semantic Search Reranking)**: AI-powered tools for improving search functionality.
 
+## ![GeSo Architecture](/GeSo.png)
+
 ## 🛠️ Setup Instructions
 
 To get GeSo up and running, follow these steps:
