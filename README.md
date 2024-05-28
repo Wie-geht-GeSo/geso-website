@@ -2,10 +2,10 @@
 
 Your digital and smart navigator for the health and social care system in Austria.
 
-## Target Audience
+## 👨🏻‍💻 Target Audience
 
-GeSo provides consolidated information about the health and social systems. 
-GeSo helps people with limited information literacy to independently access important information. 
+GeSo provides consolidated information about the health and social systems.
+GeSo helps people with limited information literacy to independently access important information.
 Everyone can use the website. It reduces barriers to the health and social systems.
 
 GeSo is funded by the Internet Foundation. You can find more information [here](https://www.netidee.at/geso).
@@ -24,7 +24,9 @@ Here's what powers GeSo:
 - **Weaviate (Vector Database)**: A cloud-native, real-time vector search engine.
 - **Cohere (Semantic Search Reranking)**: AI-powered tools for improving search functionality.
 
-## ![GeSo Architecture](/GeSo.png)
+## 🏗️ Architecture
+
+![GeSo Architecture](/GeSo.png)
 
 ## 🛠️ Setup Instructions
 
