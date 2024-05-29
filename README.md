@@ -81,7 +81,7 @@ To transform the JSON response into HTML and Svelte components, use the `content
 1. Refer to the extension's README for guidance on adding a new block type in Directus.
 2. Create a new editor block in Directus, ensuring it has a Many-to-One (M2O) relation with the new block collection. This wrapper block is a necessary workaround for integrating existing blocks directly within the editor.
 3. Set appropriate access permissions for the new block type in Directus.
-4. Define a new type in `src/lib/types/blocks/` corresponding to your block.
+4. Define a new type in `app/src/lib/types/blocks/` corresponding to your block.
 5. Update `pageService.ts` to fetch the new block data from Directus.
-6. Implement a new Svelte component for the block in `src/lib/components/blocks/`.
+6. Implement a new Svelte component for the block in `app/src/lib/components/blocks/`.
 7. Update the `+page.svelte` component map to include the new Directus collection name and the corresponding Svelte component.

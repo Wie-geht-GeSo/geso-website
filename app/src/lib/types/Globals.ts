@@ -5,4 +5,5 @@ export interface Globals {
 	logoDarkMode: string;
 	logoLightModePath: string;
 	logoDarkModePath: string;
+	displayQuestionnaire: boolean;
 }

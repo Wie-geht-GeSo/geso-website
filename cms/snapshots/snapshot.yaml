@@ -610,6 +610,78 @@ collections:
       versioning: false
     schema:
       name: popup
+  - collection: questionnaire
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: questionnaire
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 10
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: questionnaire
+  - collection: questionnaireOption
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: questionnaireOption
+      color: null
+      display_template: null
+      group: questionnaireQuestion
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: questionnaireOption
+  - collection: questionnaireQuestion
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: questionnaireQuestion
+      color: null
+      display_template: null
+      group: questionnaire
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 1
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: questionnaireQuestion
   - collection: smallText
     meta:
       accountability: all
@@ -3367,6 +3439,45 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: globals
+    field: displayQuestionnaire
+    type: boolean
+    meta:
+      collection: globals
+      conditions: null
+      display: null
+      display_options: null
+      field: displayQuestionnaire
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 7
+      special:
+        - cast-boolean
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: displayQuestionnaire
+      table: globals
+      data_type: boolean
+      default_value: false
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: header
     field: id
     type: integer
@@ -4645,6 +4756,45 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: pages
+    field: questionnaire
+    type: integer
+    meta:
+      collection: pages
+      conditions: null
+      display: null
+      display_options: null
+      field: questionnaire
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 23
+      special:
+        - m2o
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: questionnaire
+      table: pages
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: questionnaire
+      foreign_key_column: id
   - collection: pages_blocks
     field: id
     type: integer
@@ -4912,6 +5062,439 @@ fields:
       has_auto_increment: false
       foreign_key_table: blockPopup
       foreign_key_column: id
+  - collection: questionnaire
+    field: id
+    type: integer
+    meta:
+      collection: questionnaire
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: questionnaire
+      data_type: integer
+      default_value: nextval('questionnaire_id_seq'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaire
+    field: questionnaireName
+    type: string
+    meta:
+      collection: questionnaire
+      conditions: null
+      display: null
+      display_options: null
+      field: questionnaireName
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: questionnaireName
+      table: questionnaire
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaire
+    field: questions
+    type: alias
+    meta:
+      collection: questionnaire
+      conditions: null
+      display: null
+      display_options: null
+      field: questions
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 3
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: questionnaireOption
+    field: id
+    type: integer
+    meta:
+      collection: questionnaireOption
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: questionnaireOption
+      data_type: integer
+      default_value: nextval('"questionnaireOption_id_seq"'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireOption
+    field: option
+    type: string
+    meta:
+      collection: questionnaireOption
+      conditions: null
+      display: null
+      display_options: null
+      field: option
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: option
+      table: questionnaireOption
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireOption
+    field: optionNr
+    type: integer
+    meta:
+      collection: questionnaireOption
+      conditions: null
+      display: null
+      display_options: null
+      field: optionNr
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: optionNr
+      table: questionnaireOption
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: questionnaireQuestion
+      foreign_key_column: id
+  - collection: questionnaireQuestion
+    field: id
+    type: integer
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: questionnaireQuestion
+      data_type: integer
+      default_value: nextval('"questionnaireQuestion_id_seq"'::regclass)
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: false
+      is_unique: true
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireQuestion
+    field: question
+    type: string
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: question
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: question
+      table: questionnaireQuestion
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireQuestion
+    field: searchFormulation
+    type: string
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: searchFormulation
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: searchFormulation
+      table: questionnaireQuestion
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireQuestion
+    field: questionNr
+    type: integer
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: questionNr
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: questionNr
+      table: questionnaireQuestion
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: 32
+      numeric_scale: 0
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: questionnaire
+      foreign_key_column: id
+  - collection: questionnaireQuestion
+    field: questionType
+    type: string
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: questionType
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: multipleChoice
+            value: multipleChoice
+          - text: singleChoice
+            value: singleChoice
+          - text: openAnswer
+            value: openAnswer
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: questionType
+      table: questionnaireQuestion
+      data_type: character varying
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: questionnaireQuestion
+    field: options
+    type: alias
+    meta:
+      collection: questionnaireQuestion
+      conditions: null
+      display: null
+      display_options: null
+      field: options
+      group: null
+      hidden: false
+      interface: list-o2m
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 6
+      special:
+        - o2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
   - collection: smallText
     field: id
     type: integer
@@ -5434,6 +6017,27 @@ relations:
       constraint_name: pages_titleimage_foreign
       on_update: NO ACTION
       on_delete: SET NULL
+  - collection: pages
+    field: questionnaire
+    related_collection: questionnaire
+    meta:
+      junction_field: null
+      many_collection: pages
+      many_field: questionnaire
+      one_allowed_collections: null
+      one_collection: questionnaire
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: pages
+      column: questionnaire
+      foreign_key_table: questionnaire
+      foreign_key_column: id
+      constraint_name: pages_questionnaire_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
   - collection: pages_blocks
     field: item
     related_collection: null
@@ -5490,6 +6094,48 @@ relations:
       foreign_key_table: blockPopup
       foreign_key_column: id
       constraint_name: popup_popup_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: questionnaireOption
+    field: optionNr
+    related_collection: questionnaireQuestion
+    meta:
+      junction_field: null
+      many_collection: questionnaireOption
+      many_field: optionNr
+      one_allowed_collections: null
+      one_collection: questionnaireQuestion
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: options
+      sort_field: null
+    schema:
+      table: questionnaireOption
+      column: optionNr
+      foreign_key_table: questionnaireQuestion
+      foreign_key_column: id
+      constraint_name: questionnaireoption_optionnr_foreign
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: questionnaireQuestion
+    field: questionNr
+    related_collection: questionnaire
+    meta:
+      junction_field: null
+      many_collection: questionnaireQuestion
+      many_field: questionNr
+      one_allowed_collections: null
+      one_collection: questionnaire
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: questions
+      sort_field: null
+    schema:
+      table: questionnaireQuestion
+      column: questionNr
+      foreign_key_table: questionnaire
+      foreign_key_column: id
+      constraint_name: questionnairequestion_questionnr_foreign
       on_update: NO ACTION
       on_delete: SET NULL
   - collection: smallText

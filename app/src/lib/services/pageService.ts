@@ -108,7 +108,6 @@ export async function getPageBySlug(slug: string): Promise<Page> {
         likes: 0,
         dislikes: 0,
     };
-
 }
 
 export async function getPagesForSearch(): Promise<Page[]> {

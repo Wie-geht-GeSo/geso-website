@@ -2,6 +2,7 @@ import type { TransformedContentSection } from "$lib/services/contentTransformat
 import type { UUID } from "crypto";
 import type { Block } from "./blocks/Block";
 import type { JSONContent } from "@tiptap/core";
+import type { Questionnaire } from "./Questionnaire";
 
 export interface Page {
     id: number;
@@ -25,4 +26,6 @@ export interface Page {
     parentPage?: Page;
     likes: number;
     dislikes: number;
+    questionnaire?: number;
+    questionnaireData: Questionnaire;
 }

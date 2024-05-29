@@ -16,6 +16,7 @@
 	import Rating from '$lib/components/Rating.svelte';
 	import PageTitleHeader from '$lib/components/PageTitleHeader.svelte';
 	import TableOfContents from '$lib/components/TableOfContents.svelte';
+	import Questionnaire from '$lib/components/Questionnaire.svelte';
 
 	export let data: PageData;
 	// TODO: Move somewhere else
@@ -72,6 +73,10 @@
 		use:tocCrawler={{ mode: 'generate', key: $currentSlug, scrollTarget: '#page' }}
 		class="mx-auto space-y-4 {widthClasses}"
 	>
+		{#if data?.page?.questionnaireData && data?.globals?.displayQuestionnaire}
+			<Questionnaire data={data.page.questionnaireData} />
+		{/if}
+
 		{#each data?.page?.transformedContent || [] as section}
 			{#if section.type === 'html'}
 				<div class="dynamic-html">{@html section.data}</div>
