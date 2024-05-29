@@ -26,6 +26,12 @@
 		}
 	}
 
+	function resetSearch() {
+		searchPerformed = false;
+		searchLoading = false;
+		results = [];
+	}
+
 	function toggleOption(toSearch: string, option: string, isSingleChoice: boolean) {
 		if (!answers[toSearch]) {
 			answers[toSearch] = [];
@@ -157,7 +163,9 @@
 		</div>
 	{/if}
 {:else if searchLoading}
-	<ProgressRadial width="w-9" />
+	<div class="flex justify-center">
+		<ProgressRadial width="w-16" />
+	</div>
 {:else if results.length > 0}
 	<div class="border-2 border-primary-500 rounded-lg p-5">
 		<h2 class="text-center text-2xl font-bold text-primary-500 mb-4">Ergebnisse</h2>
@@ -181,5 +189,13 @@
 				{/each}
 			</ul>
 		</nav>
+		<div class="flex justify-center mt-4">
+			<button
+				on:click={resetSearch}
+				class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-700"
+			>
+				Zurück
+			</button>
+		</div>
 	</div>
 {/if}
