@@ -198,4 +198,20 @@
 			</button>
 		</div>
 	</div>
+{:else if results.length == 0 && searchPerformed}
+	<div class="border-2 border-primary-500 rounded-lg p-5">
+		<h2 class="text-center text-2xl font-bold text-primary-500 mb-4">Ergebnisse</h2>
+		<div class="w-full h-0.5 bg-primary-500 mb-4" />
+
+		<p class= "block text-lg accent-primary-500">Wir konnten leider keinen passenden Artikel zu Ihrer Suchanfrage finden. Bitte verwenden Sie die Zurück-Taste, um den Fragebogen erneut auszufüllen.</p>
+
+		<div class="flex justify-center mt-4">
+			<button
+				on:click={resetSearch}
+				class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-700"
+			>
+				Zurück
+			</button>
+		</div>
+	</div>
 {/if}

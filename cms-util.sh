@@ -66,7 +66,7 @@ backup)
     # Create pg dumps
     docker compose -f $environment exec -u root directus chown -R node:node /directus/database /directus/extensions /directus/uploads /directus/snapshots
     docker compose -f $environment exec directus npx directus schema snapshot --yes /directus/snapshots/snapshot.yaml
-    docker compose -f $environment exec database pg_dump -a --inserts -U $DB_USER -F t -T directus_users -T directus_collections -T directus_migrations -T directus_roles -T directus_fields -T directus_relations directus >cms/db_dumps/directus_$backup_name.tar
+    docker compose -f $environment exec database pg_dump -a --inserts -U directus -F t -T directus_users -T directus_collections -T directus_migrations -T directus_roles -T directus_fields -T directus_relations directus >cms/db_dumps/directus_$backup_name.tar
 
     # Create a backup
     sudo zip -r "$backup_path" $backup_dirs $dumps/directus_$backup_name.tar
@@ -104,7 +104,7 @@ restore)
     sudo unzip -o "$backup_path" -d .
 
     (docker compose -f $environment exec directus npx directus schema apply --yes /directus/snapshots/snapshot.yaml) || true
-    (docker compose -f $environment exec -T database pg_restore --disable-triggers -U $DB_USER -d directus -F t <cms/db_dumps/directus_$backup_name.tar) || true
+    (docker compose -f $environment exec -T database pg_restore --disable-triggers -U directus -d directus -F t <cms/db_dumps/directus_$backup_name.tar) || true
     (docker compose -f $environment exec -u root directus chown -R node:node /directus/database /directus/extensions /directus/uploads /directus/snapshots) || true
     docker compose -f $environment restart
     echo

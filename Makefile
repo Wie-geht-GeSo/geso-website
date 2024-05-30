@@ -23,7 +23,7 @@ init-search:
 	cd search && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt &&  python3 upsert-data.py && cd ..
 
 run-local:
-	docker compose -f local-docker-compose.yml up -d
+	docker compose -f local-docker-compose.yml up -d --remove-orphans --build
 	cd app && bun install && bun run dev
 
 run-prod: rebuild-frontend

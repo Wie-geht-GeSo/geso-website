@@ -6,7 +6,7 @@ services:
     ports:
       - "127.0.0.1:5432:5432"
     environment:
-      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_USER: "directus"
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
       POSTGRES_DB: "directus"
 
@@ -31,7 +31,7 @@ services:
       DB_HOST: "database"
       DB_PORT: "5432"
       DB_DATABASE: "directus"
-      DB_USER: "${DB_USER}"
+      DB_USER: "directus"
       DB_PASSWORD: "${DB_PASSWORD}"
 
       CACHE_ENABLED: "true"
