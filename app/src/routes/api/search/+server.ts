@@ -20,19 +20,26 @@ export async function GET({ url }) {
         return json([]);
     }
 
-    const searchResult = await client.graphql
-        .get()
-        .withClassName('Page')
-        .withFields(`aiContent title subTitle slug _additional {score explainScore distance rerank(property: "aiContent" query: "${query}") { score } }`)
-        .withHybrid({ query: query, fusionType: FusionType.relativeScoreFusion }) // TODO: Adapt alpha
-        .withAutocut(2) // Autocut to only return the top results TODO: Experiment with this
-        .do();
+    try {
+        const searchResult = await client.graphql
+            .get()
+            .withClassName('Page')
+            .withFields(`aiContent title subTitle slug _additional {score explainScore distance rerank(property: "aiContent" query: "${query}") { score } }`)
+            .withHybrid({ query: query, fusionType: FusionType.relativeScoreFusion }) // TODO: Adapt alpha
+            .withAutocut(2) // Autocut to only return the top results TODO: Experiment with this
+            .do();
 
-    const parsedResult: SearchPage[] = searchResult.data.Get.Page.map((page: SearchPage) => ({
-        title: page.title,
-        slug: page.slug,
-        subTitle: page.subTitle
-    }));
+        const parsedResult = searchResult.data.Get.Page.map((page: SearchPage) => ({
+            title: page.title,
+            slug: page.slug,
+            subTitle: page.subTitle
+        }));
 
-    return json(parsedResult);
+        return json(parsedResult);
+    } catch (error) {
+        console.error("Error during GraphQL query:", error);
+
+        // Return an empty array in case of an error
+        return json([]);
+    }
 }

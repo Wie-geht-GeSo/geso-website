@@ -19,7 +19,9 @@
 			results = await response.json(); // Use the array of {title, slug}
 		} catch (error) {
 			console.error("Couldn't reach search api: ", error);
-			results = [];
+			results = [];			
+			searchLoading = false;
+			searchPerformed = true;
 		} finally {
 			searchLoading = false;
 			searchPerformed = true;
